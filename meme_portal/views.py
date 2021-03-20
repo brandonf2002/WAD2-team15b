@@ -14,3 +14,9 @@ def user_login(request):
 	
 def user_logout(request):
 	return render(request, 'meme_portal/logout.html')
+	
+def user_account(request):
+	return render(request, 'meme_portal/account.html')
+	
+def create(request):
+	return render(request, 'meme_portal/create.html')
