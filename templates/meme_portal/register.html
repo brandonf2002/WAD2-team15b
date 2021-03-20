@@ -2,5 +2,25 @@
 {% load staticfiles %}
 
 {% block body_block %}
-	<h1>This is the registration page</h1>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <form onsubmit="event.preventDefault()" class="box">
+                    <h1>Register</h1>
+                    <p class="text-muted"> Please enter your details!</p> 
+					<input type="text" name="" placeholder="Email">
+					<input type="text" name="" placeholder="Username"> 
+					<input type="password" name="password" placeholder="Password"> 
+					<input type="password" name="" placeholder="Password Again"> 
+					<input type="submit" name="" value="Login" href="#">
+                    <div class="col-md-12">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
