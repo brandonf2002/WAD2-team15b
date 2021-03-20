@@ -14,7 +14,8 @@ class Post(models.Model):
     name = models.CharField(max_length=128)
     img_url = models.URLField()
     time_posted = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    ##########  RE_INSTATE ONCE USERS CAN BE CREATED  ################
+    #author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name;
@@ -23,4 +24,8 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     content = models.TextField()
     time_posted = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    ##########  RE_INSTATE ONCE USERS CAN BE CREATED  ################
+    #author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.content
