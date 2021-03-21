@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "meme_portal",
+    'meme_portal',
+    'registration'
+    
 ]
 
 MIDDLEWARE = [
@@ -128,3 +130,8 @@ STATICFILES_DIRS = [STATIC_DIR, ]
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 
+#Django-Registration-Redux settings
+REGISTRATION_OPEN = True
+REGISTRATION_AUTO_LOGIN = True
+LOGIN_REDIRECT_URL = 'meme_portal:index'
+LOGIN_URL = 'meme_portal:index' #change later
