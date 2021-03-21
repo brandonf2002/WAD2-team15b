@@ -20,3 +20,6 @@ def user_account(request):
 	
 def create(request):
 	return render(request, 'meme_portal/create.html')
+
+def forum(request):
+	return render(request, 'meme_portal/forum.html')

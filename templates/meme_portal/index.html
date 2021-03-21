@@ -1,8 +1,45 @@
 {% extends 'meme_portal/base.html' %}
 {% load staticfiles %}
 
+{% block title_block %}
+    Home
+{% endblock %}
+
 {% block body_block %}
-	<h1>This is the index page</h1>
+<br>
+<h2>Recently Created</h2>
+<div class="container">
+    <div class="row justify-content-center"></div>
+</div>
+<div class="container"></div>
+	<div class="row gy-4">
+		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>		
+		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>
+		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>
+		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>
+		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>
+	</div>
+<br><br>
+<h1 style="text-align:center">Welcome Back</h1>
+<br><br>
+<h2>Whats new?</h2>
+
+
+<div class="container-sm">
+    <div class="row justify-content-center"></div>
+</div>
+<div class="container px-4"></div>
+	<div class="row gy-2">
+		<div class="col-sm"><img src="{% static "images/rango.jpg" %}"  alt="Picture of a Cat" /></div>
+		<div class="col-sm"><img src="{% static "images/rango.jpg" %}"  alt="Picture of a Cat" /></div>
+		<div class="col-sm"><img src="{% static "images/rango.jpg" %}"  alt="Picture of a Cat" /></div>
+	</div>
+	
 {% endblock %}
 
 
