@@ -4,28 +4,31 @@
 <html>
 	<head lang="en">
 		<meta charset="UTF-8" />
-		
+
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 			crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
 			crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 			crossorigin="anonymous"></script>
-		
+
 		<title>
 			{% block title_block %}
 				Meme App
-			{% endblock %}		
-		</title>	
-		<!-- CSS -->			
+			{% endblock %}
+		</title>
+		<!-- CSS -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="{% static "css/bootstrap.css" %}" />
 		<link rel="stylesheet" href="{% static "css/loginform.css" %}"/>
 		<link rel="stylesheet" href="{% static "css/imagehover.css" %}"/>
 		<link rel="stylesheet" href="{% static "css/socialmedia.css" %}"/>
+		<link rel=¨stylesheet¨  href="{% static "css/create_page.css" %}"/>
+
 		<!-- JavaScript -->
 		<script src="{% static "js/jquery.js" %}"></script>
-		
+
+
 		<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <a href="http://127.0.0.1:8000/?" class="navbar-brand" style="padding-left:20px;padding-right:20px;">MemePortal</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
@@ -52,32 +55,32 @@
 						<a class="dropdown-item" href="/login/">Login</a>
 						<a class="dropdown-item" href="/logout/">Logout</a>
 					</div>
-				</li>				
+				</li>
             </ul>
 		</div>
 
 		<form class="d-flex" style="padding-left:20px;padding-right:20px;">
 			<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
 			<button class="btn btn-outline-success" type="submit">Search</button>
-		</form>     
+		</form>
         </div>
     </nav>
 
 
 	</head>
 	<body>
-	
+
 		<div id="page-container">
 			<div id="content-wrap">
-					
+
 			{% block body_block %}
 			{% endblock %}
 		<br>
 
-			
+
 		</div>
 		{% block footer_block %}
-		{% endblock %}			
+		{% endblock %}
 		<footer id="footer">
 			<div class="container">
 				<div class="row justify-content-center"></div>
@@ -95,8 +98,13 @@
 				<a href="https://www.youtube.com/" class="fa fa-youtube"></a>
 				<a href="https://www.instagram.com/" class="fa fa-instagram"></a>
 				<a href="https://www.reddit.com/" class="fa fa-reddit"></a>
+
+
+				<!-- JavaScript -->
+				<script src="{% static "js/image_preview.js" %}"></script>
+				
 			</div>
 		</footer>
 	</body>
-	
+
 </html>
