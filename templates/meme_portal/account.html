@@ -3,4 +3,10 @@
 
 {% block body_block %}
 	<h1>This is the account page</h1>
+	
+{% if user.is_authenticated %}
+	
+{% else %}
+	<a href="{% url 'meme_portal:login' %}">You arent Logged in</a><br />
+{% endif %}
 {% endblock %}
