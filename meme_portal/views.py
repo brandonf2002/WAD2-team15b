@@ -92,10 +92,10 @@ def user_login(request):
 				# If the account is valid and active, we can log the user in.
 				# We'll send the user back to the homepage.
 				login(request, user)
-				return redirect(reverse('rango:index'))
+				return redirect(reverse('meme_portal:index'))
 			else:
 				# An inactive account was used - no logging in!
-				return HttpResponse("Your Rango account is disabled.")
+				return HttpResponse("Your Meme_portal account is disabled.")
 		else:
 			# Bad login details were provided. So we can't log the user in.
 			print(f"Invalid login details: {username}, {password}")
@@ -117,8 +117,6 @@ def create(request):
 def forum(request):
     return render(request, 'meme_portal/forum.html')
 	
-@login_required
 def user_logout(request):
-	logout(request)
-	return redirect(reverse('meme_portal/index.html'))
+	return render(request, 'meme_portal/logout.html')
 

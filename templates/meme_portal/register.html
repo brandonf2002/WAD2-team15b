@@ -10,17 +10,15 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card">
+				<form id="user_form" class="box" method="post" action="{% url 'meme_portal:register' %}" >
+
                 <form onsubmit="event.preventDefault()" method="post" class="box">
 				{% csrf_token %}
                     <h1>Register</h1>
                     <p class="text-muted"> Please enter your details!</p> 
-					<input type="text" name="" placeholder="Email">
-					<input type="text" name="" placeholder="Username"> 
+					<input type="text" name="email" placeholder="Email">
+					<input type="text" name="username" placeholder="Username"> 
 					<input type="password" name="password" placeholder="Password"> 
-					<input type="password" name="password" placeholder="Password"> 
-					<!--{% for field in user_form %}
-					<p class="some-bootstrapclass">{{ field.label_tag }}{{ field }}</p>
-					{% endfor %}-->
 					<input type="submit" name="submit" value="Register" href="#">
                     <div class="col-md-12">
                     </div>
@@ -29,7 +27,5 @@
         </div>
     </div>
 </div>
-{{ user_form.as_p }}
-
 {% endif %}
 {% endblock %}
