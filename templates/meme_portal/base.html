@@ -17,10 +17,12 @@
 				Meme App
 			{% endblock %}		
 		</title>	
-		<!-- CSS -->
+		<!-- CSS -->			
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="{% static "css/bootstrap.css" %}" />
 		<link rel="stylesheet" href="{% static "css/loginform.css" %}"/>
 		<link rel="stylesheet" href="{% static "css/imagehover.css" %}"/>
+		<link rel="stylesheet" href="{% static "css/socialmedia.css" %}"/>
 		<!-- JavaScript -->
 		<script src="{% static "js/jquery.js" %}"></script>
 		
@@ -54,18 +56,43 @@
             </ul>
 		</div>
 
-			<form class="d-flex" style="padding-left:20px;padding-right:20px;">
-				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-				<button class="btn btn-outline-success" type="submit">Search</button>
-			</form> 
-       
+		<form class="d-flex" style="padding-left:20px;padding-right:20px;">
+			<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+			<button class="btn btn-outline-success" type="submit">Search</button>
+		</form>     
         </div>
-	
     </nav>
+
+
 	</head>
 	<body>
-		<div>
-		{% block body_block %}
-		{% endblock %}
+	
+		<div id="page-container">
+			<div id="content-wrap">
+					
+			{% block body_block %}
+			{% endblock %}
+			
+		</div>	
+		<footer id="footer">
+			<div class="container">
+				<div class="row justify-content-center"></div>
+			</div>
+			<div class="container" ></div>
+			<div class="row gy-4" style="position:absolute;
+										 width:300px;
+										 bottom:0px;
+										 right:25%;
+										 left:50%;
+										 margin-left:-150px;">
+				<a href="https://www.facebook.com/" class="fa fa-facebook"></a>
+				<a href="https://twitter.com/?lang=en-gb" class="fa fa-twitter"></a>
+				<a href="https://www.google.com/" class="fa fa-google"></a>
+				<a href="https://www.youtube.com/" class="fa fa-youtube"></a>
+				<a href="https://www.instagram.com/" class="fa fa-instagram"></a>
+				<a href="https://www.reddit.com/" class="fa fa-reddit"></a>
+			</div>
+		</footer>
 	</body>
+	
 </html>

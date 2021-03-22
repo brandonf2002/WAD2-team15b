@@ -1,0 +1,55 @@
+.fa {  
+	width: 25px;
+	padding: 20px;
+	text-align: center;
+	text-decoration: none;
+	margin: 5px 2px;
+	color: white;
+    border-radius: 60%; 
+}
+
+.fa:hover {
+	opacity: 0.7;
+}
+
+.fa-facebook {
+    background: #3B5998;
+}
+
+.fa-twitter {
+    background: #55ACEE;
+}
+
+.fa-google {
+    background: #dd4b39;
+}
+
+.fa-linkedin {
+    background: #007bb5;
+}
+
+.fa-youtube {
+    background: #bb0000;
+}
+
+.fa-instagram {
+    background: #8a3ab9;
+}
+
+.fa-reddit {
+    background: #ff5700;
+}
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 2.5rem;    /* Footer height */
+}
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;            /* Footer height */
+}
