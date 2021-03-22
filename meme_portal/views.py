@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from meme_portal.forms import UserForm, UserProfileForm
 from django.urls import reverse
 from django.shortcuts import redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 
 def index(request):
@@ -106,7 +106,7 @@ def user_login(request):
 	else:
 		# No context variables to pass to the template system, hence the
 		# blank dictionary object...
-		return render(request, 'meme_portal/login.html')
+		return render(request, 'meme_portal/index.html')
     
 def user_account(request):
     return render(request, 'meme_portal/account.html')
@@ -117,6 +117,12 @@ def create(request):
 def forum(request):
     return render(request, 'meme_portal/forum.html')
 	
+# Use the login_required() decorator to ensure only those logged in can
+# access the view.
+
 def user_logout(request):
-	return render(request, 'meme_portal/logout.html')
+	# Since we know the user is logged in, we can now just log them out.
+	logout(request)
+	# Take the user back to the homepage.
+	return redirect(reverse('meme_portal:index'))
 
