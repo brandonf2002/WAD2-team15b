@@ -1,26 +1,27 @@
 {% extends 'meme_portal/base.html' %}
 {% load staticfiles %}
-
+{% load crispy_forms_tags %}
 {% block body_block %}
 
 {% if registered %}
-<strong>thank you for registering!</strong>
+<a href="{% url 'meme_portal:index' %}">Return to the homepage.</a><br />
 {% else %}
 <div class="container">
     <div class="row">
         <div class="col-md-6">
             <div class="card">
-                <form onsubmit="event.preventDefault()" class="box">
+                <form onsubmit="event.preventDefault()" method="post" class="box">
 				{% csrf_token %}
-				{{ user_form.as_p }}
-				{{ profile_form.as_p }}
                     <h1>Register</h1>
                     <p class="text-muted"> Please enter your details!</p> 
 					<input type="text" name="" placeholder="Email">
 					<input type="text" name="" placeholder="Username"> 
 					<input type="password" name="password" placeholder="Password"> 
-					<input type="password" name="" placeholder="Password"> 
-					<input type="submit" name="" value="Login" href="#">
+					<input type="password" name="password" placeholder="Password"> 
+					<!--{% for field in user_form %}
+					<p class="some-bootstrapclass">{{ field.label_tag }}{{ field }}</p>
+					{% endfor %}-->
+					<input type="submit" name="submit" value="Register" href="#">
                     <div class="col-md-12">
                     </div>
                 </form>
@@ -28,5 +29,7 @@
         </div>
     </div>
 </div>
+{{ user_form.as_p }}
+
 {% endif %}
 {% endblock %}
