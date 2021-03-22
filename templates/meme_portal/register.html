@@ -11,15 +11,17 @@
         <div class="col-md-6">
             <div class="card">
                 <form onsubmit="event.preventDefault()" class="box">
+                    <h1>Register</h1>
+                    <p class="text-muted"> Please enter your details!</p> 
 				{% csrf_token %}
 				{{ user_form.as_p }}
 				{{ profile_form.as_p }}
-                    <h1>Register</h1>
-                    <p class="text-muted"> Please enter your details!</p> 
+				<!--
 					<input type="text" name="" placeholder="Email">
 					<input type="text" name="" placeholder="Username"> 
 					<input type="password" name="password" placeholder="Password"> 
 					<input type="password" name="" placeholder="Password"> 
+				-->
 					<input type="submit" name="" value="Login" href="#">
                     <div class="col-md-12">
                     </div>

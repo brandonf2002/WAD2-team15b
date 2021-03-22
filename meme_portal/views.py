@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from .forms import UserForm, UserProfileForm
 
 def index(request):
     return render(request, 'meme_portal/index.html')
@@ -29,7 +30,7 @@ def register(request):
 			user.set_password(user.password)
 			user.save()
 
-			# Now sort out the UserProfile instance.
+                        # Now sort out the UserProfile instance.
 			# Since we need to set the user attribute ourselves,
 			# we set commit=False. This delays saving the model
 
