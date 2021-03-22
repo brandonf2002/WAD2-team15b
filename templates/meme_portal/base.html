@@ -72,10 +72,12 @@
 					
 			{% block body_block %}
 			{% endblock %}
-			
+		<br>
 
 			
-		</div>	
+		</div>
+		{% block footer_block %}
+		{% endblock %}			
 		<footer id="footer">
 			<div class="container">
 				<div class="row justify-content-center"></div>
@@ -94,7 +96,7 @@
 				<a href="https://www.instagram.com/" class="fa fa-instagram"></a>
 				<a href="https://www.reddit.com/" class="fa fa-reddit"></a>
 			</div>
-		</footer>{% block footer_block %}{% endblock %}	
+		</footer>
 	</body>
 	
 </html>

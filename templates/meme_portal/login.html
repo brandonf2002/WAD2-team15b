@@ -7,6 +7,9 @@
 
 {% block body_block %}
 
+{% if user.is_authenticated %}
+	<a href="{% url 'meme_portal:index' %}">Return to the homepage.</a><br />
+{% else %}
 <div class="container-xxl">
     <div class="row">
         <div class="col-md-6">
@@ -26,4 +29,5 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock %}

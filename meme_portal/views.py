@@ -107,7 +107,7 @@ def user_login(request):
 	else:
 		# No context variables to pass to the template system, hence the
 		# blank dictionary object...
-		return render(request, 'meme_portal/index.html')
+		return render(request, 'meme_portal/login.html')
     
 def user_account(request):
     return render(request, 'meme_portal/account.html')
@@ -120,6 +120,7 @@ def forum(request):
 	
 # Use the login_required() decorator to ensure only those logged in can
 # access the view.
+
 
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
