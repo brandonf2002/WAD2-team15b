@@ -10,16 +10,19 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card">
-				<form id="user_form" class="box" method="post" action="{% url 'meme_portal:register' %}" >
-
-                <form onsubmit="event.preventDefault()" method="post" class="box">
-				{% csrf_token %}
+                <form onsubmit="event.preventDefault()" class="box">
                     <h1>Register</h1>
                     <p class="text-muted"> Please enter your details!</p> 
-					<input type="text" name="email" placeholder="Email">
-					<input type="text" name="username" placeholder="Username"> 
+				{% csrf_token %}
+				{{ user_form.as_p }}
+				{{ profile_form.as_p }}
+				<!--
+					<input type="text" name="" placeholder="Email">
+					<input type="text" name="" placeholder="Username"> 
 					<input type="password" name="password" placeholder="Password"> 
-					<input type="submit" name="submit" value="Register" href="#">
+					<input type="password" name="" placeholder="Password"> 
+				-->
+					<input type="submit" name="" value="Login" href="#">
                     <div class="col-md-12">
                     </div>
                 </form>
