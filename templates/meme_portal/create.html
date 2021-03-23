@@ -2,13 +2,15 @@
 {% load staticfiles %}
 
 {% block body_block %}
+
+{% if user.is_authenticated %}
 <div class="container">
   <h1 >Create-Page </h1>
 
   <form class="form-horizontal">
       <div class="form-group">
         <div class="ml-2 col-sm-6">
-        <form method="post" id="image-form">
+        <form  method="post" id="image-form">
           <input type="file" name="img[]" class="file" accept="image/*">
         </form>
       </div>
@@ -46,7 +48,8 @@
       </form>
   </div>
 
-
-
+{% else %}
+<a href="{% url 'meme_portal:login' %}">You must be logged in to create</a><br />
+{% endif %}
 
 {% endblock %}

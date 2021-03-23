@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
+from django.views.generic.list import ListView
 
 def index(request):
     return render(request, 'meme_portal/index.html')
@@ -117,14 +118,11 @@ def create(request):
 
 def forum(request):
     return render(request, 'meme_portal/forum.html')
-	
-# Use the login_required() decorator to ensure only those logged in can
-# access the view.
 
-
+@login_required 
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
 	logout(request)
 	# Take the user back to the homepage.
-	return redirect(reverse('meme_portal:index'))
+	return redirect(reverse('meme_portal:logout'))
 
