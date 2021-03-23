@@ -39,6 +39,7 @@
 .fa-reddit {
     background: #ff5700;
 }
+
 #page-container {
   position: relative;
   min-height: 92vh;
@@ -47,6 +48,7 @@
 #content-wrap {
   padding-bottom: 2.5rem;    /* Footer height */
 }
+
 #footer {
   position: absolute;
   bottom: 0;

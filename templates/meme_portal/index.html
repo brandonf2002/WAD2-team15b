@@ -6,24 +6,54 @@
 {% endblock %}
 
 {% block body_block %}
+
+<div>
 <br>
+{% if user.is_authenticated %}
+	<h3 style="padding-left:20px;">Welcome Back {{ user.username }}!</h3>
+{% else %}
+	<h3 style="padding-left:20px;">Welcome to meme_portal</h3>
+{% endif %}
+<br><br>
+
+{% if post %}
+<ul>
+{% for post in post %}
+	<li style="padding-left:20px;">{{ post.name }}</li>
+{% endfor %}
+</ul>
+{% else %}
+	<strong style="padding-left:20px;">There are no posts present.</strong>
+{% endif %}
+
+
+</div>
+<br><br>
 <h2 style="padding-left:20px;">Recently Created</h2>
 <div class="container">
     <div class="row justify-content-center"></div>
 </div>
 <div class="container" ></div>
-	<div class="row gy-4" style="padding-left:20px;padding-right:20px;">
-		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
-			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>		
-		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
-			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>
-		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
-			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>
-		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
-			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>
+<div class="row gy-4" style="padding-left:20px;padding-right:20px;">
+	<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+		<img src="media/cat4.jpg" alt="Picture of a Cat" /></a><button class="btn btn-outline-secondary">Like</button></div>
+		
+	<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+		<img src="media/cat4.jpg" alt="Picture of a Cat" /></a><button class="btn btn-outline-secondary">Like</button></div>
+	
+	<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+		<img src="media/cat4.jpg" alt="Picture of a Cat" /></a><button class="btn btn-outline-secondary">Like</button></div>
+		
+	<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+		<img src="media/cat4.jpg" alt="Picture of a Cat" /></a><button class="btn btn-outline-secondary">Like</button></div>
+		
+	<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+		<img src="media/cat4.jpg" alt="Picture of a Cat" /></a><button class="btn btn-outline-secondary">Like</button></div>
+		
+	<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+		<img src="media/cat4.jpg" alt="Picture of a Cat" /></a><button class="btn btn-outline-secondary">Like</button></div>
 	</div>
 <br><br>
-<h1 style="text-align:center">Welcome Back</h1>
 
 <br><br>
 
@@ -32,14 +62,20 @@
     <div class="row justify-content-center"></div>
 </div>
 <div class="container px-4"></div>
-	<div class="row gy-2" style="padding-left:20px;padding-right:20px;">
-		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
-			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>		
-		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
-			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>
-		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
-			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>
-	</div>
+<div class="row gy-2" style="padding-left:20px;padding-right:20px;">
+	<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+		<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>		
+	<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+		<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>
+	<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+		<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>
+	<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+		<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>		
+	<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+		<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>
+	<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+		<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>
+</div>
 	
 {% endblock %}
 

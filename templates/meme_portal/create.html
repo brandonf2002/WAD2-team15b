@@ -2,6 +2,8 @@
 {% load staticfiles %}
 
 {% block body_block %}
+
+{% if user.is_authenticated %}
 <div class="container">
   <br>
   <h1 style="text-align:center">Create-Page </h1>
@@ -9,11 +11,15 @@
   <form class="form-horizontal">
       <div class="form-group">
         <div class="ml-2 col-sm-6">
+<<<<<<< HEAD
           <img src="https://via.placeholder.com/160x160?text=MemePortal" id="preview" class="img-thumbnail">
         </div>
         <br>
         <div class="ml-2 col-sm-6">
         <form method="post" id="image-form">
+=======
+        <form  method="post" id="image-form">
+>>>>>>> e28199a776862dd99a6ecb66fff2bd258a846e26
           <input type="file" name="img[]" class="file" accept="image/*">
         </form>
       </div>
@@ -48,7 +54,8 @@
       </form>
   </div>
 
-
-
+{% else %}
+<a href="{% url 'meme_portal:login' %}">You must be logged in to create</a><br />
+{% endif %}
 
 {% endblock %}
