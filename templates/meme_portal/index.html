@@ -6,6 +6,18 @@
 {% endblock %}
 
 {% block body_block %}
+
+<div>
+{% if post %}
+<ul>
+{% for post in post %}
+	<li>{{ post.name }}</li>
+{% endfor %}
+</ul>
+{% else %}
+	<strong>There are no posts present.</strong>
+{% endif %}
+</div>
 <br>
 <h2 style="padding-left:20px;">Recently Created</h2>
 <div class="container">
@@ -14,13 +26,26 @@
 <div class="container" ></div>
 	<div class="row gy-4" style="padding-left:20px;padding-right:20px;">
 		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
-			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>		
+			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a><button class="btn">Button</button></div>	
+
 		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
-			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>
+			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a><button class="btn">Button</button></div>	
+		
 		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
-			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>
+			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a><button class="btn">Button</button></div>	
+	
 		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
-			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a></div>
+			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a><button class="btn">Button</button></div>	
+			
+		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a><button class="btn">Button</button></div>	
+			
+		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a><button class="btn">Button</button></div>	
+			
+		<div class="col-sm"><a href="https://github.com/brandonf2002/WAD2-team15b/tree/main/meme_portal">
+			<img src="media/cat4.jpg" alt="Picture of a Cat" /></a><button class="btn">Button</button></div>	
+
 	</div>
 <br><br>
 <h1 style="text-align:center">Welcome Back</h1>
