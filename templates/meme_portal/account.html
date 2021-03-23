@@ -2,11 +2,12 @@
 {% load staticfiles %}
 
 {% block body_block %}
-	<h1>This is the account page</h1>
-	
+	<h1 style="padding-left:20px;">This is the account page</h1>
+	<br>
 {% if user.is_authenticated %}
-	
+	<h3 style="padding-left:20px;">Welcome Back {{ user.username }}!</h3>
+	<p style="padding-left:20px;">Visits: {{ visits }}</p>
 {% else %}
-	<a href="{% url 'meme_portal:login' %}">You arent Logged in</a><br />
+	<a href="{% url 'meme_portal:login' %}">You are not Logged in</a><br />
 {% endif %}
 {% endblock %}
