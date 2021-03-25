@@ -7,64 +7,12 @@ django.setup()
 from meme_portal.models import Forum, Post, Comment
 
 def populate():
-
-    comments_cat_post_1 = [
-        {
-            'content': 'Cute cat',
-        },
-        {
-            'content': 'My cat looks just the same',
-        },
-    ]
-    comments_cat_post_3 = [
-        {
-            'content': 'Not as cute as my cat',
-        },
-    ]
-    comments_cat_post_4 = [
-        {
-            'content': 'Wow thats a pretty nice photo',
-        },
-        {
-            'content': 'Nice cat',
-        },
-    ]
-    comments_cs_post_1 = [
-        {
-            'content': 'lol',
-        },
-    ]
-    comments_cs_post_3 = [
-        {
-            'content': 'Too true',
-        },
-        {
-            'content': 'Laugh cry emoji',
-        },
-    ]
-    comments_cs_post_5 = [
-        {
-            'content': 'XD',
-        },
-        {
-            'content': 'funny meme',
-        },
-        {
-            'content': 'Another comment',
-        },
-    ]
-    comments_cs_post_6 = [
-        {
-            'content': 'Hello, world!',
-        },
-        {
-            'content': 'This is yet another comment',
-        },
-    ]
-
     cat_posts = [
         {
-            'comments': comments_cat_post_1,
+            'comments': [
+                { 'content': 'Cute cat', },
+                { 'content': 'My cat looks just the same', },
+            ],
             'title': 'Cat photo',
             'url': 'https://images.pexels.com/photos/320014/pexels-photo-320014.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
         },
@@ -73,12 +21,17 @@ def populate():
             'url': 'https://images.pexels.com/photos/416160/pexels-photo-416160.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
         },
         {
-            'comments': comments_cat_post_3,
+            'comments': [
+                { 'content': 'Not as cute as my cat', },
+            ],
             'title': 'Cat photo 3',
             'url': 'https://www.photopoly.net/wp-content/uploads/30042011/1.jpg',
         },
         {
-            'comments': comments_cat_post_4,
+            'comments': [
+                { 'content': 'Wow thats a pretty nice photo', },
+                { 'content': 'Nice cat', },
+            ],
             'title': 'The last cat photo',
             'url': 'https://www.photopoly.net/wp-content/uploads/30042011/2.jpg',
         },
@@ -86,7 +39,9 @@ def populate():
 
     cs_posts = [
         {
-            'comments': comments_cs_post_1,
+            'comments': [
+                { 'content': 'lol', },
+            ],
             'title': 'Getting help online',
             'url': 'https://i.imgur.com/QEOYcAD.png',
         },
@@ -95,7 +50,10 @@ def populate():
             'url': 'https://i.imgur.com/FzdARaX.jpeg',
         },
         {
-            'comments': comments_cs_post_3,
+            'comments': [
+                { 'content': 'Too true', },
+                { 'content': 'Laugh cry emoji', },
+            ],
             'title': 'Thanks',
             'url': 'https://i.redd.it/jx0pxoihk4o61.jpg',
         },
@@ -104,12 +62,19 @@ def populate():
             'url': 'https://i.redd.it/yjdg3jztk1o61.jpg',
         },
         {
-            'comments': comments_cs_post_5,
+            'comments': [
+                { 'content': 'XD', },
+                { 'content': 'funny meme', },
+                { 'content': 'Another comment', },
+            ],
             'title': 'Another meme',
             'url': 'https://i.redd.it/tz0pzdj5g2o61.png',
         },
         {
-            'comments': comments_cs_post_6,
+            'comments': [
+                { 'content': 'Hello, world!', },
+                { 'content': 'This is yet another comment', },
+            ],
             'title': 'Cpp meme',
             'url': 'https://i.redd.it/mglh78m6pxj61.jpg',
         },
