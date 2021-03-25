@@ -98,7 +98,7 @@ def populate():
     for name, forum_data in forums.items():
         forum = add_forum(name=name)
         for p in forum_data['posts']:
-            post = add_post(forum=forum, title=p['title'], url=p['title'])
+            post = add_post(forum=forum, title=p['title'], url=p['title'], likes=p['likes'])
             if 'comments' in p:
                 for c in p['comments']:
                     add_comment(post, c['content']);
@@ -111,16 +111,23 @@ def populate():
 def add_forum(name):
     f = Forum.objects.get_or_create(name=name)[0]
 
+    f.save();
+
     return f
 
-def add_post(forum, title, url):
+def add_post(forum, title, url, likes):
     p = Post.objects.get_or_create(forum=forum, name=title)[0]
     p.url = url
+    p.likes = likes
+
+    p.save();
 
     return p
 
 def add_comment(post, content):
     c = Comment.objects.get_or_create(post=post, content=content)[0]
+
+    c.save();
 
     return c
 
