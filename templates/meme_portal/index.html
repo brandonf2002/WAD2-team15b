@@ -20,6 +20,7 @@
 <ul>
 {% for post in post %}
 	<li style="padding-left:20px;">{{ post.name }}</li>
+	<li style="padding-left:20px;"><img src="{{ post.img_url }}"/></li>
 {% endfor %}
 </ul>
 {% else %}

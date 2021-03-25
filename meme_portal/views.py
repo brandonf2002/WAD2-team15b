@@ -18,7 +18,7 @@ def index(request):
 	# that will be passed to the template engine.
 	posts_list = Post.objects.order_by('-likes')[:5]
 	context_dict = {}
-	context_dict['posts'] = posts_list
+	context_dict['post'] = posts_list
 	
 	visitor_cookie_handler(request)
 	context_dict['visits'] = request.session['visits']
