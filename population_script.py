@@ -15,10 +15,12 @@ def populate():
             ],
             'title': 'Cat photo',
             'url': 'https://images.pexels.com/photos/320014/pexels-photo-320014.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+            'likes': 99,
         },
         {
             'title': 'Another cat photo',
             'url': 'https://images.pexels.com/photos/416160/pexels-photo-416160.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+            'likes': 260,
         },
         {
             'comments': [
@@ -26,6 +28,7 @@ def populate():
             ],
             'title': 'Cat photo 3',
             'url': 'https://www.photopoly.net/wp-content/uploads/30042011/1.jpg',
+            'likes': 20,
         },
         {
             'comments': [
@@ -34,6 +37,7 @@ def populate():
             ],
             'title': 'The last cat photo',
             'url': 'https://www.photopoly.net/wp-content/uploads/30042011/2.jpg',
+            'likes': 1,
         },
     ]
 
@@ -44,10 +48,12 @@ def populate():
             ],
             'title': 'Getting help online',
             'url': 'https://i.imgur.com/QEOYcAD.png',
+            'likes': 23,
         },
         {
             'title': 'ML meme',
             'url': 'https://i.imgur.com/FzdARaX.jpeg',
+            'likes': 456,
         },
         {
             'comments': [
@@ -56,10 +62,12 @@ def populate():
             ],
             'title': 'Thanks',
             'url': 'https://i.redd.it/jx0pxoihk4o61.jpg',
+            'likes': 1258,
         },
         {
             'title': 'Proud',
             'url': 'https://i.redd.it/yjdg3jztk1o61.jpg',
+            'likes': 45,
         },
         {
             'comments': [
@@ -69,6 +77,7 @@ def populate():
             ],
             'title': 'Another meme',
             'url': 'https://i.redd.it/tz0pzdj5g2o61.png',
+            'likes': 22,
         },
         {
             'comments': [
@@ -77,6 +86,7 @@ def populate():
             ],
             'title': 'Cpp meme',
             'url': 'https://i.redd.it/mglh78m6pxj61.jpg',
+            'likes': 2200,
         },
     ]
 

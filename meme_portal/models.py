@@ -13,6 +13,7 @@ class Post(models.Model):
     name = models.CharField(max_length=128)
     img_url = models.URLField()
     time_posted = models.DateTimeField(default=timezone.now)
+    likes = models.IntegerField(default=0)
     ##########  RE_INSTATE ONCE USERS CAN BE CREATED  ################
     #author = models.ForeignKey(User, on_delete=models.CASCADE)
 	
