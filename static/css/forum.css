@@ -1,11 +1,11 @@
 div.post {
   border: 1px solid #ccc;
   float: left;
-  height: 400px;
+  height: auto;
   width: 400px;
   overflow: hidden;
   display: block;
-  margin: 4px;
+  margin: 5px;
 }
 
 div.post:hover {
@@ -20,6 +20,15 @@ div.post img {
 }
 
 div.title {
-  padding: 15px;
+  padding: 5px;
   text-align: center;
+}
+
+div.buttons {
+  padding: 5px;
+  text-align: center;
+}
+
+div.buttons li {
+  display: inline;
 }
