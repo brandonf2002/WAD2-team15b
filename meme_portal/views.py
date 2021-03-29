@@ -19,6 +19,10 @@ def index(request):
 	posts_list = Post.objects.order_by('-likes')[:5]
 	context_dict = {}
 	context_dict['post'] = posts_list
+
+	forums_list = Forum.objects.order_by('?')[:5]
+	context_dict = {}
+	context_dict['forum'] = forum_list
 	
 	visitor_cookie_handler(request)
 	context_dict['visits'] = request.session['visits']
