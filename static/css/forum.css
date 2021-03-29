@@ -1,17 +1,22 @@
 div.post {
-  margin: 5px;
   border: 1px solid #ccc;
-  float left;
-  width 180px;
+  float: left;
+  height: 400px;
+  width: 400px;
+  overflow: hidden;
+  display: block;
+  margin: 4px;
 }
 
 div.post:hover {
   border: 1px solid #777;
 }
 
-div.post: img {
-  width: 100%;
-  height: auto;
+div.post img {
+  max-height: 400px;
+  max-width: none;
+  min-width: 100%;
+  min-height: 400px;
 }
 
 div.title {
