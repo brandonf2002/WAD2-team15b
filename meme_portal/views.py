@@ -23,7 +23,7 @@ def index(request):
 	forum_list = Forum.objects.order_by('?')[:5]
 	context_dict = {}
 	context_dict['forums'] = forum_list
-	
+
 	visitor_cookie_handler(request)
 	context_dict['visits'] = request.session['visits']
 	response = render(request, 'meme_portal/index.html', context=context_dict)
@@ -36,7 +36,7 @@ def get_server_side_cookie(request, cookie, default_val=None):
 		val = default_val
 	return val
 
-  
+
 def visitor_cookie_handler(request):
 	# Get the number of visits to the site.
 	# We use the COOKIES.get() function to obtain the visits cookie.
@@ -55,14 +55,14 @@ def visitor_cookie_handler(request):
 		request.session['last_visit'] = str(datetime.now())
 	else:
 		request.session['last_visit'] = last_visit_cookie
-	
+
 	request.session['visits'] = visits
-	
-	
-@login_required  
+
+
+@login_required
 def create_page(request, category_name_slug):
     return render(request, 'meme_portal/create.html')
-    
+
 def register(request):
     # A boolean value for telling the template
 	# whether the registration was successful.
@@ -117,7 +117,7 @@ def register(request):
 					'meme_portal/register.html',
 					context = {'user_form': user_form,
 					'profile_form': profile_form,})
-    
+
 def user_login(request):
 # If the request is a HTTP POST, try to pull out the relevant information.
 	if request.method == 'POST':
@@ -157,12 +157,12 @@ def user_login(request):
 		# No context variables to pass to the template system, hence the
 		# blank dictionary object...
 		return render(request, 'meme_portal/login.html')
-    
+
 def user_account(request):
 	visitor_cookie_handler(request)
-	
+
 	return render(request, 'meme_portal/account.html')
-    
+
 def create(request):
     return render(request, 'meme_portal/create.html')
 
@@ -186,10 +186,14 @@ def forum(request):
     return show_forum(request, forum_slug)
 
 
-@login_required 
+@login_required
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
 	logout(request)
 	# Take the user back to the homepage.
 	return redirect(reverse('meme_portal:logout'))
 
+@login_required
+def create_post(request,forum_name_slug):
+	context={"forum_name":forum_name_slug}
+	return render(request,"meme_portal/create.html")

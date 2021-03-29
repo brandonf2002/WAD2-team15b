@@ -12,4 +12,5 @@ urlpatterns = [
     path('account/', views.user_account, name='account'),
     path('forum/<slug:forum_name_slug>/', views.show_forum, name='show_forum'),
     path('forum/', views.forum, name='forum'),
+    path('forum/<slug:forum_name_slug>/create_post/', views.create_post, name='create_post'),
 ]
