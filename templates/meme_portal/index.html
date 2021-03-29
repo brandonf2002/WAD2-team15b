@@ -16,11 +16,12 @@
 {% endif %}
 <br><br>
 
-{% if post %}
+{% if forums %}
 <ul>
-{% for post in post %}
-	<li style="padding-left:20px;">{{ post.name }}</li>
-	<li style="padding-left:20px;"><img src="{{ post.img_url }}"/></li>
+{% for forum in forums %}
+	<li style="padding-left:20px;">
+		<a href="{% url 'meme_portal:show_forum' forum.slug %}">{{ forum.name }}</a>
+	</li>
 {% endfor %}
 </ul>
 {% else %}

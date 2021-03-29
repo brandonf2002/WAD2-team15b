@@ -20,9 +20,9 @@ def index(request):
 	context_dict = {}
 	context_dict['post'] = posts_list
 
-	forums_list = Forum.objects.order_by('?')[:5]
+	forum_list = Forum.objects.order_by('?')[:5]
 	context_dict = {}
-	context_dict['forum'] = forum_list
+	context_dict['forums'] = forum_list
 	
 	visitor_cookie_handler(request)
 	context_dict['visits'] = request.session['visits']
