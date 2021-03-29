@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.views.generic.list import ListView
-from meme_portal.models import Post
+from meme_portal.models import Post, Forum, Comment
 from datetime import datetime
 
 def index(request):
@@ -161,6 +161,21 @@ def user_account(request):
     
 def create(request):
     return render(request, 'meme_portal/create.html')
+
+def show_forum(request, forum_name_slug):
+    context_dict = {}
+
+    try:
+        forum = Forum.objects.get(slug=forum_name_slug)
+        posts = Post.objects.filter(forum=forum)
+
+        context_dict['posts'] = posts
+        context_dict['forum'] = forum
+    except Forum.DoesNotExist:
+        context_dict['posts'] = None
+        context_dict['forum'] = None
+
+    return render(request, 'meme_portal/forum.html', context=context_dict)
 
 def forum(request):
     return render(request, 'meme_portal/forum.html')
