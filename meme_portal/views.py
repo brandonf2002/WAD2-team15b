@@ -181,6 +181,11 @@ def show_forum(request, forum_name_slug):
 
     return render(request, 'meme_portal/forum.html', context=context_dict)
 
+def forum(request):
+    forum_slug = Forum.objects.order_by('?')[0].slug
+    return show_forum(request, forum_slug)
+
+
 @login_required 
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
