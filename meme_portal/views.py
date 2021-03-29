@@ -177,7 +177,7 @@ def show_forum(request, forum_name_slug):
 
     return render(request, 'meme_portal/forum.html', context=context_dict)
 
-def forum(request):
+def forum(request, forum_name_slug):
     return render(request, 'meme_portal/forum.html')
 
 @login_required 
