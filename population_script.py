@@ -4,9 +4,17 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'gif_and_meme_portal.settings')
 django.setup()
 
-from meme_portal.models import Forum, Post, Comment
+from meme_portal.models import Forum, Post, Comment, UserProfile
+from django.contrib.auth.models import User
 
 def populate():
+    users = [
+        {'username': 'bob02', 'password': 'hello'},
+        {'username': 'user10', 'password': 'world'},
+        {'username': 'number_1_fan', 'password': 'WOW'},
+        {'username': 'IAMAUSER', 'password': 'BBBBBBBBBBBBBBBBBBBB01'},
+    ]
+
     cat_posts = [
         {
             'comments': [
@@ -95,6 +103,11 @@ def populate():
         'cs_memes' : {'posts': cs_posts},
     }
 
+    for profile in users:
+        print(profile['username'])
+        print(profile['password'])
+        add_user_profile(name=profile['username'], psswrd=profile['password'])
+
     for name, forum_data in forums.items():
         forum = add_forum(name=name)
         for p in forum_data['posts']:
@@ -107,6 +120,19 @@ def populate():
         for p in Post.objects.filter(forum=f):
             for c in Comment.objects.filter(post=p):
                 print(f'-> forum: {f}, post: {p}, comment: {c}')
+
+def add_user_profile(name, psswrd):
+    try:
+        u = User.objects.create_user(name, password=psswrd)
+    except django.db.utils.IntegrityError:
+        u = User.objects.get(username=name)
+
+    u.save()
+     
+    up = UserProfile.objects.get_or_create(user=u)[0]
+    up.save()
+
+    return up
 
 def add_forum(name):
     f = Forum.objects.get_or_create(name=name)[0]
