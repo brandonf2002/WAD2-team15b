@@ -197,3 +197,7 @@ def user_logout(request):
 def create_post(request,forum_name_slug):
 	context={"forum_name":forum_name_slug}
 	return render(request,"meme_portal/create.html")
+
+@login_required
+def create_page(request):
+	return render(request,"meme_portal/create_page.html")
