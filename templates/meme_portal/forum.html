@@ -1,7 +1,30 @@
 {% extends 'meme_portal/base.html' %}
 {% load staticfiles %}
 
+
+{% block title_block %}
+	{% if forum %}
+		- {{ forum.name }}
+	{% else %}
+		- Forum Not Found
+{% endblock %}
+
 {% block body_block %}
-	<h1>This is the forum page</h1>
+
+	<div>
+		{% if forum %}
+			<h1>{{ forum.name }}</h1>
+			{% if posts %}
+				<ul>
+					{% for post in posts %}
+						<li style="padding-left:20px;">{{ post.name }}</li>
+						<li style="padding-left:20px;"><img src="{{ post.img_url }}"/></li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				There are no posts yet
+		{% else %}
+		This Forum does not exist, please create it.
+	</div>
 
 {% endblock %}
