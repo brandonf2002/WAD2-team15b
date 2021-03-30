@@ -22,13 +22,20 @@
 		$(document).ready(function(){
 			$(".button_like").click(function(e) {
 				e.preventDefault();
-				let _url_ = $(this).attr("post_url");
+				let _this_ = $(this);
+				let _url_ = _this_.attr("post_url");
+				let logged_in = _this_.attr("logged_in");
+
+				let countText = $(".like_count[post_slug="+_this_.attr("post_slug"));
+				let textValue = parseInt(countText.html());
 				$.ajax({
 					url: _url_,
 					method: "GET",
 					data: {},
 					success: function(data) {
-						console.log(_url_);
+						if (logged_in === "True") {
+							countText.text(textValue + 1);
+						}
 					},
 					error: function(error) {
 						console.log("error");
@@ -54,10 +61,11 @@
 						</a>
 						<div class="buttons">
 							<ul>
-								<li><button class="button_like" type="submit" post_url="{% url 'meme_portal:like_post' forum.slug post.slug %}">Like</button></li>
-								<li><button type="submit">Comment</button></li>
+								<li><button class="button_like" type="submit" logged_in={{ user.is_authenticated }} post_slug="{{ post.slug }}" post_url="{% url 'meme_portal:like_post' forum.slug post.slug %}">Like</button></li>
+								<li class="like_count" post_slug="{{ post.slug }}" >{{ post.likes.count }}</li>
 								<li><button type="submit">Dislike</button></li>
 							</ul>
+							<button type="submit">Comment</button>
 						</div>
 					</div>
 				{% endfor %}

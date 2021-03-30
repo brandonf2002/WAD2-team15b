@@ -179,12 +179,13 @@ def forum(request):
     forum_slug = Forum.objects.order_by('?')[0].slug
     return show_forum(request, forum_slug)
 
+@login_required
 def like_link(request, forum_name_slug, post_name_slug):
+    usr = request.user
     if request.method == 'GET':
         print(post_name_slug)
         post = get_object_or_404(Post, slug=post_name_slug)
         print(post.likes.count())
-        usr = request.user
         usrProf = get_object_or_404(UserProfile, user=usr)
         if usr.is_authenticated:
             if usrProf in post.likes.all():
