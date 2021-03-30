@@ -181,8 +181,8 @@ def forum(request):
 
 @login_required
 def like_link(request, forum_name_slug, post_name_slug):
-    usr = request.user
     if request.method == 'GET':
+        usr = request.user
         print(post_name_slug)
         post = get_object_or_404(Post, slug=post_name_slug)
         print(post.likes.count())
@@ -191,7 +191,26 @@ def like_link(request, forum_name_slug, post_name_slug):
             if usrProf in post.likes.all():
                 post.likes.remove(usrProf)
             else:
+                if usrProf in post.dislikes.all():
+                    post.dislikes.remove(usrProf)
                 post.likes.add(usrProf)
+    return show_forum(request, forum_name_slug)
+
+@login_required
+def dislike_link(request, forum_name_slug, post_name_slug):
+    if request.method == 'GET':
+        usr = request.user
+        print(post_name_slug)
+        post = get_object_or_404(Post, slug=post_name_slug)
+        print(post.dislikes.count())
+        usrProf = get_object_or_404(UserProfile, user=usr)
+        if usr.is_authenticated:
+            if usrProf in post.dislikes.all():
+                post.dislikes.remove(usrProf)
+            else:
+                if usrProf in post.likes.all():
+                    post.likes.remove(usrProf)
+                post.dislikes.add(usrProf)
     return show_forum(request, forum_name_slug)
 
 @login_required
