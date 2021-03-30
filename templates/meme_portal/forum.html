@@ -31,7 +31,7 @@
 						</a>
 						<div class="buttons">
 							<ul>
-								<li><button type="submit">Like</button></li>
+								<li><button type="submit", onclick="window.location.href='{% url 'meme_portal:like_post' forum.slug post.slug %}';">Like</button></li>
 								<li><button type="submit">Comment</button></li>
 								<li><button type="submit">Dislike</button></li>
 							</ul>
