@@ -78,7 +78,9 @@
 		{% if forum %}
 			<h1>{{ forum.name }}</h1>
 			{% if posts %}
-			{% for post in posts %}
+				{% for post in posts %}
+					{% isIn user post.likes as hasLiked %}
+					{% isIn user post.dislikes as hasDisliked %}
 					<div class="post">
 						<div class="title">{{ post.name }} - by {{ post.author }}</div>
 						<a target="_blank" href="{{ post.img_url }}">
@@ -94,7 +96,6 @@
 						</div>
 					</div>
 				{% endfor %}
-
 			{% else %}
 				There are no posts yet
 				<a href="{% url 'meme_portal:create_post' forum.slug %}"> Create a post </a>
