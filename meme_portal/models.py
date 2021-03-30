@@ -12,7 +12,7 @@ class UserProfile(models.Model):
 	picture = models.ImageField(upload_to='profile_images', blank=True)
 
 	def __str__(self):
-		return self.user.username
+		return str(self.user)
 
 class Forum(models.Model):
     name = models.CharField(max_length=128, unique=True)
