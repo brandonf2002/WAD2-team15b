@@ -32,6 +32,11 @@ class Post(models.Model):
     time_posted = models.DateTimeField(default=timezone.now)
     likes = models.ManyToManyField(UserProfile, related_name='likes', blank=True)
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    slug = models.SlugField(unique=True);
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Post, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name;

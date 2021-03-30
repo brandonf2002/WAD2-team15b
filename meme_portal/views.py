@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from .forms import UserForm, UserProfileForm
 from meme_portal.forms import UserForm, UserProfileForm
@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.views.generic.list import ListView
+from django.views.generic import RedirectView
 from meme_portal.models import Post, Forum, Comment
 from datetime import datetime
 
@@ -178,6 +179,19 @@ def forum(request):
     forum_slug = Forum.objects.order_by('?')[0].slug
     return show_forum(request, forum_slug)
 
+class PostLikeRedirect(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        slug = self.kwargs.get("slug")
+        print(slug)
+        post = get_object_or_404(Post, slug=slug)
+        url_ = post.get_absolute_url()
+        usr = self.request.user
+        if usr.is_authenticated():
+            if usr in post.likes.all():
+                post.likes.remove(usr)
+            else:
+                post.likes.add(usr)
+        return url_
 
 @login_required
 def user_logout(request):
