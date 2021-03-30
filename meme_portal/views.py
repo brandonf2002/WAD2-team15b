@@ -29,13 +29,11 @@ def index(request):
 	response = render(request, 'meme_portal/index.html', context=context_dict)
 	return response
 
-
 def get_server_side_cookie(request, cookie, default_val=None):
 	val = request.session.get(cookie)
 	if not val:
 		val = default_val
 	return val
-
 
 def visitor_cookie_handler(request):
 	# Get the number of visits to the site.
@@ -43,11 +41,8 @@ def visitor_cookie_handler(request):
 	# If the cookie exists, the value returned is casted to an integer.
 	# If the cookie doesn't exist, then the default value of 1 is used.
 	visits = int(request.COOKIES.get('visits', '1'))
-	last_visit_cookie = get_server_side_cookie(request,
-												'last_visit',
-												str(datetime.now()))
-	last_visit_time = datetime.strptime(last_visit_cookie[:-7],
-											'%Y-%m-%d %H:%M:%S')
+	last_visit_cookie = get_server_side_cookie(request, 'last_visit', str(datetime.now()))
+	last_visit_time = datetime.strptime(last_visit_cookie[:-7], '%Y-%m-%d %H:%M:%S')
 	# If it's been more than a day since the last visit...
 	if (datetime.now() - last_visit_time).days > 0:
 		visits = visits + 1
@@ -58,6 +53,12 @@ def visitor_cookie_handler(request):
 
 	request.session['visits'] = visits
 
+<<<<<<< HEAD
+=======
+def create_page(request, category_name_slug):
+    return render(request, 'meme_portal/create.html')
+
+>>>>>>> 8e8f5dbae0c1e882b283ab0e0cf72bfdb1d984fe
 def register(request):
     # A boolean value for telling the template
 	# whether the registration was successful.
