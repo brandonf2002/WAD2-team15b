@@ -21,16 +21,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 			crossorigin="anonymous"></script>
 
-
-
 		<!-- CSS -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="{% static "css/bootstrap.css" %}" />
-		<link rel="stylesheet" href="{% static "css/loginform.css" %}"/>
-		<link rel="stylesheet" href="{% static "css/imagehover.css" %}"/>
-		<link rel="stylesheet" href="{% static "css/socialmedia.css" %}"/>
-		<!-- CSS -->
-
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="{% static "css/bootstrap.css" %}" />
 		<link rel="stylesheet" href="{% static "css/loginform.css" %}"/>
@@ -43,6 +34,9 @@
 
 		<!-- JavaScript -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		{% block add_js %}
+
+		{% endblock %}
 
 		<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <a href="http://127.0.0.1:8000/?" class="navbar-brand" style="padding-left:20px;padding-right:20px;">MemePortal</a>

@@ -17,6 +17,29 @@
 	{% endif %}
 {% endblock %}
 
+{% block add_js %}
+	<script>
+		$(document).ready(function(){
+			$(".button_like").click(function(e) {
+				e.preventDefault();
+				let _url_ = $(this).attr("post_url");
+				$.ajax({
+					url: _url_,
+					method: "GET",
+					data: {},
+					success: function(data) {
+						console.log(_url_);
+					},
+					error: function(error) {
+						console.log("error");
+						console.log(error);
+					}
+				})
+			})
+		})
+	</script>
+{% endblock %}
+
 {% block body_block %}
 
 	<div>
@@ -31,7 +54,7 @@
 						</a>
 						<div class="buttons">
 							<ul>
-								<li><button type="submit", onclick="window.location.href='{% url 'meme_portal:like_post' forum.slug post.slug %}';">Like</button></li>
+								<li><button class="button_like" type="submit" post_url="{% url 'meme_portal:like_post' forum.slug post.slug %}">Like</button></li>
 								<li><button type="submit">Comment</button></li>
 								<li><button type="submit">Dislike</button></li>
 							</ul>
