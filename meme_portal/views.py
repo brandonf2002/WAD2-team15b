@@ -203,6 +203,7 @@ def dislike_link(request, forum_name_slug, post_name_slug):
         print(post_name_slug)
         post = get_object_or_404(Post, slug=post_name_slug)
         print(post.dislikes.count())
+        print("This is a dis")
         usrProf = get_object_or_404(UserProfile, user=usr)
         if usr.is_authenticated:
             if usrProf in post.dislikes.all():

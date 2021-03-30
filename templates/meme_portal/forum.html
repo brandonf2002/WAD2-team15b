@@ -1,4 +1,5 @@
 {% extends 'meme_portal/base.html' %}
+{% load forum_tags %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -86,8 +87,8 @@
 						<div class="buttons">
 							<ul>
 								<li><button class="button_like" type="submit" logged_in={{ user.is_authenticated }} post_slug="{{ post.slug }}" post_url="{% url 'meme_portal:like_post' forum.slug post.slug %}">Like</button></li>
-								<li class="like_count" post_slug="{{ post.slug }}" >{{ post.likes.count}}</li>
-								<li><button class="button_dislike" button type="submit" logged_in={{ user.is_authenticated }} post_slug="{{ post.slug }}" post_url="{% url 'meme_portal:like_post' forum.slug post.slug %}">Dislike</button></li>
+								<li class="like_count" post_slug="{{ post.slug }}" >{% subtract post.likes.count post.dislikes.count %}</li>
+								<li><button class="button_dislike" type="submit" logged_in={{ user.is_authenticated }} post_slug="{{ post.slug }}" post_url="{% url 'meme_portal:dislike_post' forum.slug post.slug %}">Dislike</button></li>
 							</ul>
 							<button type="submit">Comment</button>
 						</div>
