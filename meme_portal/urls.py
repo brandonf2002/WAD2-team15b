@@ -15,4 +15,5 @@ urlpatterns = [
     path('forum/', views.forum, name='forum'),
     path('forum/<slug:forum_name_slug>/create_post/', views.create_post, name='create_post'),
     path('forum/<slug:forum_name_slug>/<slug:post_name_slug>/like', views.like_link, name='like_post'),
+    path('forum/<slug:forum_name_slug>/<slug:post_name_slug>/dislike', views.dislike_link, name='dislike_post'),
 ]
