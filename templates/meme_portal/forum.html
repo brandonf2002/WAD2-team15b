@@ -9,14 +9,20 @@
 	{% endif %}
 {% endblock %}
 
+{% block add_nav_element %}
+	{% if forum %}
+		<li class="nav-item">
+			<a href="{% url 'meme_portal:create_post' forum.slug %}" class="nav-link">Create Post </a>
+		</li>
+	{% endif %}
+{% endblock %}
+
 {% block body_block %}
 
 	<div>
 		{% if forum %}
 			<h1>{{ forum.name }}</h1>
 			{% if posts %}
-  			<div class="col-md-8"><a href="{% url 'meme_portal:create_post' forum.slug %}"> Create a post </a>
-					</div>
 			{% for post in posts %}
 					<div class="post">
 						<div class="title">{{ post.name }} - by {{ post.author }}</div>
