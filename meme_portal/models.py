@@ -30,7 +30,7 @@ class Post(models.Model):
     name = models.CharField(max_length=128)
     img_url = models.URLField()
     time_posted = models.DateTimeField(default=timezone.now)
-    likes = models.IntegerField(default=0)
+    likes = models.ManyToManyField(UserProfile, related_name='likes', blank=True)
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
     def __str__(self):
