@@ -32,3 +32,17 @@ div.buttons {
 div.buttons li {
   display: inline;
 }
+
+button.button_like img {
+  max-width: none;
+  min-width: 100%;
+  max-height: 25px;
+  min-height: 25px;
+}
+
+button.button_dislike img {
+  max-width: none;
+  min-width: 100%;
+  max-height: 25px;
+  min-height: 25px;
+}

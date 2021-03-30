@@ -88,9 +88,17 @@
 						</a>
 						<div class="buttons">
 							<ul>
-								<li><button class="button_like" type="submit" logged_in={{ user.is_authenticated }} post_slug="{{ post.slug }}" post_url="{% url 'meme_portal:like_post' forum.slug post.slug %}">Like</button></li>
+								<li>
+									<button class="button_like" type="submit" logged_in={{ user.is_authenticated }} post_slug="{{ post.slug }}" post_url="{% url 'meme_portal:like_post' forum.slug post.slug %}">
+										<img src="{% if hasLiked %}{% static 'images/forum/like.png' %}{% else %}{% static 'images/forum/like-grey.png' %}{% endif %}" />
+									</button>
+								</li>
 								<li class="like_count" post_slug="{{ post.slug }}" >{% subtract post.likes.count post.dislikes.count %}</li>
-								<li><button class="button_dislike" type="submit" logged_in={{ user.is_authenticated }} post_slug="{{ post.slug }}" post_url="{% url 'meme_portal:dislike_post' forum.slug post.slug %}">Dislike</button></li>
+								<li>
+									<button class="button_dislike" type="submit" logged_in={{ user.is_authenticated }} post_slug="{{ post.slug }}" post_url="{% url 'meme_portal:dislike_post' forum.slug post.slug %}">
+										<img src="{% if hasDisliked %}{% static 'images/forum/dislike.png' %}{% else %}{% static 'images/forum/dislike-grey.png' %}{% endif %}" />
+									</button>
+								</li>
 							</ul>
 							<button type="submit">Comment</button>
 						</div>
