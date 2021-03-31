@@ -1,7 +1,7 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import UserForm, UserProfileForm
-from meme_portal.forms import UserForm, UserProfileForm
+from meme_portal.forms import UserForm, UserProfileForm, PostForm
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
@@ -53,9 +53,6 @@ def visitor_cookie_handler(request):
 		request.session['last_visit'] = last_visit_cookie
 
 	request.session['visits'] = visits
-
-def create_page(request, category_name_slug):
-    return render(request, 'meme_portal/create.html')
 
 def register(request):
     # A boolean value for telling the template
@@ -157,9 +154,6 @@ def user_account(request):
 
 	return render(request, 'meme_portal/account.html')
 
-def create(request):
-    return render(request, 'meme_portal/create.html')
-
 def show_forum(request, forum_name_slug):
     context_dict = {}
 
@@ -223,8 +217,40 @@ def user_logout(request):
 
 @login_required
 def create_post(request,forum_name_slug):
-	context={"forum_name":forum_name_slug}
-	return render(request,"meme_portal/create.html")
+	try:
+		forum = Forum.objects.get(slug=forum_name_slug)
+	except Forum.DoesNotExist:
+		forum=None
+
+	if forum is None:
+		return redirect('/forum/')
+
+	form=PostForm()
+	if request.method=='POST':
+		form=PostForm(request.POST)
+		if form.is_valid():
+			post=form.save(commit=False)
+			post.forum=forum
+			user=UserProfile.objects.get(user=user)
+			post.author=user
+			post.save()
+			return redirect(reverse('meme_portal:forum',
+									kwargs={'forum_name_slug':forum_name_slug}))
+	else:
+		return render(request, "meme_portal/create_post.html",{'form':form})
+
+@login_required
+def post(request,forum_name_slug):
+	forum = Forum.objects.get(slug=forum_name_slug)
+	comments=Comment.objects.filter(post=post)
+	post.name=name
+	post.img_url=img_url
+	post.time_posted=time_posted
+	post.likes=likes
+	author=UserProfile.objects.get(user=author)
+	post.author=user_profile
+	context_dict={'forum':forum, 'name':name, 'img_url':imr_url, 'time_posted':time_posted, 'likes':likes, 'author':author}
+	return render(request,'meme_portal/create_post.html', context=context_dict)
 
 @login_required
 def create_page(request):
