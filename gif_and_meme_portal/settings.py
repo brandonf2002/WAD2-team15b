@@ -19,6 +19,8 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 LOGIN_URL = 'meme_portal:login'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 SESSION_EXPIRE_AT_BROWSER_CLOSE=True
 
 # Quick-start development settings - unsuitable for production
