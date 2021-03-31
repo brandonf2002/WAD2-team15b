@@ -145,6 +145,17 @@
 	</div>
 
 	<div class="comment_display">
-		<p>Hello world!</p>
+		{% for comment in comments %}
+			<div class="comments">
+				<p class="heading">
+					{{ comment.author }}
+					<span class="time_posted">
+						{{ comment.time_posted }}
+					</span>
+				</p>
+				{{ comment.content | linebreaks }}
+			</div>
+			<br>
+    {% endfor %}
 	</div>
 {% endblock %}

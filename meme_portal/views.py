@@ -188,7 +188,7 @@ def show_post(request, forum_name_slug, post_name_slug):
 
     post = get_object_or_404(Post, slug=post_name_slug)
     forum = get_object_or_404(Forum, slug=forum_name_slug)
-    comments = post.comments.all()
+    comments = post.comments.all().order_by('-time_posted')
     new_comment = None
 
     if request.method == 'POST' and request.user.is_authenticated:
