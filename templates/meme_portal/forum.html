@@ -26,8 +26,14 @@
 				let _this_ = $(this);
 				let _url_ = _this_.attr("post_url");
 				let logged_in = _this_.attr("logged_in");
+				let hasClicked = _this_.attr("clicked");
+				let thisImg = _this_.find("img").first();
 
-				let countText = $(".like_count[post_slug="+_this_.attr("post_slug"));
+				let likeBtn = $(".button_like[post="+_this_.attr("post"));
+				let hasClickedLike = likeBtn.attr("clicked");
+				let likeImg = likeBtn.find("img").first();
+
+				let countText = $(".like_count[post="+_this_.attr("post"));
 				let textValue = parseInt(countText.html());
 				$.ajax({
 					url: _url_,
@@ -35,7 +41,18 @@
 					data: {},
 					success: function(data) {
 						if (logged_in === "True") {
-							countText.text(textValue - 1);
+							if (hasClicked === "False") {
+								countText.text(textValue - (hasClickedLike === "True" ? 2 : 1));
+								_this_.attr("clicked", "True");
+								likeBtn.attr("clicked", "False");
+								thisImg.attr("src", "/static/images/forum/dislike.png");
+								likeImg.attr("src", "/static/images/forum/like-grey.png");
+							}
+							else {
+								countText.text(textValue + 1);
+								thisImg.attr("src", "/static/images/forum/dislike-grey.png");
+								_this_.attr("clicked", "False");
+							}
 						}
 					},
 					error: function(error) {
@@ -50,8 +67,14 @@
 				let _this_ = $(this);
 				let _url_ = _this_.attr("post_url");
 				let logged_in = _this_.attr("logged_in");
+				let hasClicked = _this_.attr("clicked");
+				let thisImg = _this_.find("img").first();
 
-				let countText = $(".like_count[post_slug="+_this_.attr("post_slug"));
+				let dislikeBtn = $(".button_dislike[post="+_this_.attr("post"));
+				let hasClickedDisike = dislikeBtn.attr("clicked");
+				let dislikeImg = dislikeBtn.find("img").first();
+
+				let countText = $(".like_count[post="+_this_.attr("post"));
 				let textValue = parseInt(countText.html());
 				$.ajax({
 					url: _url_,
@@ -59,7 +82,18 @@
 					data: {},
 					success: function(data) {
 						if (logged_in === "True") {
-							countText.text(textValue + 1);
+							if (hasClicked === "False") {
+								countText.text(textValue + (hasClickedDisike === "True" ? 2 : 1));
+								_this_.attr("clicked", "True");
+								dislikeBtn.attr("clicked", "False");
+								thisImg.attr("src", "/static/images/forum/like.png");
+								dislikeImg.attr("src", "/static/images/forum/dislike-grey.png");
+							}
+							else {
+								countText.text(textValue - 1);
+								thisImg.attr("src", "/static/images/forum/like-grey.png");
+								_this_.attr("clicked", "False");
+							}
 						}
 					},
 					error: function(error) {
@@ -89,14 +123,14 @@
 						<div class="buttons">
 							<ul>
 								<li>
-									<button class="button_like" type="submit" logged_in={{ user.is_authenticated }} post_slug="{{ post.slug }}" post_url="{% url 'meme_portal:like_post' forum.slug post.slug %}">
-										<img src="{% if hasLiked %}{% static 'images/forum/like.png' %}{% else %}{% static 'images/forum/like-grey.png' %}{% endif %}" />
+									<button class="button_like" type="submit" clicked="{{ hasLiked }}" logged_in={{ user.is_authenticated }} post="{{ post.slug }}" post_url="{% url 'meme_portal:like_post' forum.slug post.slug %}">
+										<img src="{% if hasLiked %}{% static 'images/forum/like.png' %}{% else %}{% static 'images/forum/like-grey.png' %}{% endif %}" post="{{ post.slug }}"/>
 									</button>
 								</li>
-								<li class="like_count" post_slug="{{ post.slug }}" >{% subtract post.likes.count post.dislikes.count %}</li>
+								<li class="like_count" post="{{ post.slug }}" >{% subtract post.likes.count post.dislikes.count %}</li>
 								<li>
-									<button class="button_dislike" type="submit" logged_in={{ user.is_authenticated }} post_slug="{{ post.slug }}" post_url="{% url 'meme_portal:dislike_post' forum.slug post.slug %}">
-										<img src="{% if hasDisliked %}{% static 'images/forum/dislike.png' %}{% else %}{% static 'images/forum/dislike-grey.png' %}{% endif %}" />
+									<button class="button_dislike" type="submit" clicked="{{ hasDisliked }}" logged_in={{ user.is_authenticated }} post="{{ post.slug }}" post_url="{% url 'meme_portal:dislike_post' forum.slug post.slug %}">
+										<img src="{% if hasDisliked %}{% static 'images/forum/dislike.png' %}{% else %}{% static 'images/forum/dislike-grey.png' %}{% endif %}" post="{{ post.slug }}"/>
 									</button>
 								</li>
 							</ul>
