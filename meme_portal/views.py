@@ -1,6 +1,7 @@
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import UserForm, UserProfileForm
+from .forms import CommentForm, UserForm, UserProfileForm
 from meme_portal.forms import UserForm, UserProfileForm, PostForm
 from django.urls import reverse
 from django.shortcuts import redirect
@@ -182,13 +183,38 @@ def forum(request):
     forum_slug = Forum.objects.order_by('?')[0].slug
     return show_forum(request, forum_slug)
 
+def show_post(request, forum_name_slug, post_name_slug):
+    context_dict = {}
+
+    post = get_object_or_404(Post, slug=post_name_slug)
+    forum = get_object_or_404(Forum, slug=forum_name_slug)
+    comments = post.comments.all().order_by('-time_posted')
+    new_comment = None
+
+    if request.method == 'POST' and request.user.is_authenticated:
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            user = get_object_or_404(UserProfile, user=request.user)
+            new_comment.post = post
+            new_comment.author = user
+            new_comment.save()
+            return redirect(reverse('meme_portal:show_post', kwargs={"forum_name_slug":forum_name_slug, "post_name_slug":post_name_slug}))
+    else:
+        comment_form = CommentForm()
+
+    context_dict['post'] = post
+    context_dict['forum'] = forum
+    context_dict['comments'] = comments
+    context_dict['new_comment'] = new_comment
+    context_dict['comment_forum'] = comment_form
+    return render(request=request, template_name='meme_portal/post.html', context=context_dict)
+
 @login_required
 def like_link(request, forum_name_slug, post_name_slug):
     if request.method == 'GET':
         usr = request.user
-        print(post_name_slug)
         post = get_object_or_404(Post, slug=post_name_slug)
-        print(post.likes.count())
         usrProf = get_object_or_404(UserProfile, user=usr)
         if usr.is_authenticated:
             if usrProf in post.likes.all():
@@ -203,10 +229,7 @@ def like_link(request, forum_name_slug, post_name_slug):
 def dislike_link(request, forum_name_slug, post_name_slug):
     if request.method == 'GET':
         usr = request.user
-        print(post_name_slug)
         post = get_object_or_404(Post, slug=post_name_slug)
-        print(post.dislikes.count())
-        print("This is a dis")
         usrProf = get_object_or_404(UserProfile, user=usr)
         if usr.is_authenticated:
             if usrProf in post.dislikes.all():
