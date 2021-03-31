@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import UserForm, UserProfileForm
+from .forms import CommentForm, UserForm, UserProfileForm
 from meme_portal.forms import UserForm, UserProfileForm, PostForm
 from django.urls import reverse
 from django.shortcuts import redirect
@@ -187,9 +187,25 @@ def show_post(request, forum_name_slug, post_name_slug):
 
     post = get_object_or_404(Post, slug=post_name_slug)
     forum = get_object_or_404(Forum, slug=forum_name_slug)
+    comments = post.comments.all()
+    new_comment = None
+
+    if request.method == 'POST' and request.user.is_authenticated:
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            user = get_object_or_404(UserProfile, user=request.user)
+            new_comment.post = post
+            new_comment.author = user
+            new_comment.save()
+    else:
+        comment_form = CommentForm()
 
     context_dict['post'] = post
     context_dict['forum'] = forum
+    context_dict['comments'] = comments
+    context_dict['new_comment'] = new_comment
+    context_dict['comment_forum'] = comment_form
     return render(request=request, template_name='meme_portal/post.html', context=context_dict)
 
 @login_required

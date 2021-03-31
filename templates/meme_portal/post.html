@@ -136,10 +136,15 @@
 	</div>
 
 	<div class="comment_forum">
-		
+		<form method="post" action="{% url 'meme_portal:show_post' forum.slug post.slug %}">
+			{% csrf_token %}
+			{{ comment_forum.as_p }}
+			<br>
+			<input type="submit" name="" value="Comment" href="#" />
+		</form>
 	</div>
 
 	<div class="comment_display">
-		
+		<p>Hello world!</p>
 	</div>
 {% endblock %}
