@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import UserForm, UserProfileForm
 from meme_portal.forms import UserForm, UserProfileForm, PostForm
@@ -7,7 +7,8 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.views.generic.list import ListView
-from meme_portal.models import Post, Forum, Comment
+from django.views.generic import RedirectView
+from meme_portal.models import Post, Forum, Comment, UserProfile
 from datetime import datetime
 
 def index(request):
@@ -53,12 +54,6 @@ def visitor_cookie_handler(request):
 
 	request.session['visits'] = visits
 
-<<<<<<< HEAD
-=======
-def create_page(request, category_name_slug):
-    return render(request, 'meme_portal/create.html')
-
->>>>>>> 8e8f5dbae0c1e882b283ab0e0cf72bfdb1d984fe
 def register(request):
     # A boolean value for telling the template
 	# whether the registration was successful.
@@ -177,6 +172,41 @@ def show_forum(request, forum_name_slug):
 def forum(request):
     forum_slug = Forum.objects.order_by('?')[0].slug
     return show_forum(request, forum_slug)
+
+@login_required
+def like_link(request, forum_name_slug, post_name_slug):
+    if request.method == 'GET':
+        usr = request.user
+        print(post_name_slug)
+        post = get_object_or_404(Post, slug=post_name_slug)
+        print(post.likes.count())
+        usrProf = get_object_or_404(UserProfile, user=usr)
+        if usr.is_authenticated:
+            if usrProf in post.likes.all():
+                post.likes.remove(usrProf)
+            else:
+                if usrProf in post.dislikes.all():
+                    post.dislikes.remove(usrProf)
+                post.likes.add(usrProf)
+    return show_forum(request, forum_name_slug)
+
+@login_required
+def dislike_link(request, forum_name_slug, post_name_slug):
+    if request.method == 'GET':
+        usr = request.user
+        print(post_name_slug)
+        post = get_object_or_404(Post, slug=post_name_slug)
+        print(post.dislikes.count())
+        print("This is a dis")
+        usrProf = get_object_or_404(UserProfile, user=usr)
+        if usr.is_authenticated:
+            if usrProf in post.dislikes.all():
+                post.dislikes.remove(usrProf)
+            else:
+                if usrProf in post.likes.all():
+                    post.likes.remove(usrProf)
+                post.dislikes.add(usrProf)
+    return show_forum(request, forum_name_slug)
 
 @login_required
 def user_logout(request):

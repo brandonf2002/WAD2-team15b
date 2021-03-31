@@ -30,8 +30,14 @@ class Post(models.Model):
     name = models.CharField(max_length=128)
     img_url = models.URLField()
     time_posted = models.DateTimeField(default=timezone.now)
-    likes = models.IntegerField(default=0)
+    likes = models.ManyToManyField(UserProfile, related_name='likes', blank=True)
+    dislikes = models.ManyToManyField(UserProfile, related_name='dislikes', blank=True)
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    slug = models.SlugField(unique=True);
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Post, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name;
