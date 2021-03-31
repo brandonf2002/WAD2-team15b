@@ -134,7 +134,7 @@
 									</button>
 								</li>
 							</ul>
-							<button type="submit">Comment</button>
+							<button type="submit" onclick="window.location.href='{% url 'meme_portal:show_post' forum.slug post.slug %}';">Comment</button>
 						</div>
 					</div>
 				{% endfor %}

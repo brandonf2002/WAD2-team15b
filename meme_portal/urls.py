@@ -15,9 +15,10 @@ urlpatterns = [
     path('forum/<slug:forum_name_slug>/', views.show_forum, name='show_forum'),
     path('forum/', views.forum, name='forum'),
     path('forum/<slug:forum_name_slug>/create_post/', views.create_post, name='create_post'),
+    path('forum/<slug:forum_name_slug>/<slug:post_name_slug>', views.show_post, name='show_post'),
     path('forum/<slug:forum_name_slug>/<slug:post_name_slug>/like', views.like_link, name='like_post'),
     path('forum/<slug:forum_name_slug>/<slug:post_name_slug>/dislike', views.dislike_link, name='dislike_post'),
-	path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='meme_portal/password/password_reset_done.html'), name='password_reset_done'),
+    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='meme_portal/password/password_reset_done.html'), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="meme_portal/password/password_reset_confirm.html"), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='meme_portal/password/password_reset_complete.html'), name='password_reset_complete'),      
 ]

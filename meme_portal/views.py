@@ -182,13 +182,21 @@ def forum(request):
     forum_slug = Forum.objects.order_by('?')[0].slug
     return show_forum(request, forum_slug)
 
+def show_post(request, forum_name_slug, post_name_slug):
+    context_dict = {}
+
+    post = get_object_or_404(Post, slug=post_name_slug)
+    forum = get_object_or_404(Forum, slug=forum_name_slug)
+
+    context_dict['post'] = post
+    context_dict['forum'] = forum
+    return render(request=request, template_name='meme_portal/post.html', context=context_dict)
+
 @login_required
 def like_link(request, forum_name_slug, post_name_slug):
     if request.method == 'GET':
         usr = request.user
-        print(post_name_slug)
         post = get_object_or_404(Post, slug=post_name_slug)
-        print(post.likes.count())
         usrProf = get_object_or_404(UserProfile, user=usr)
         if usr.is_authenticated:
             if usrProf in post.likes.all():
@@ -203,10 +211,7 @@ def like_link(request, forum_name_slug, post_name_slug):
 def dislike_link(request, forum_name_slug, post_name_slug):
     if request.method == 'GET':
         usr = request.user
-        print(post_name_slug)
         post = get_object_or_404(Post, slug=post_name_slug)
-        print(post.dislikes.count())
-        print("This is a dis")
         usrProf = get_object_or_404(UserProfile, user=usr)
         if usr.is_authenticated:
             if usrProf in post.dislikes.all():

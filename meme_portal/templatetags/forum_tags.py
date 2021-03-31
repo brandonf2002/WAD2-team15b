@@ -9,6 +9,10 @@ def subtract(a, b):
     return a - b
 
 @register.simple_tag
+def add(a, b):
+    return a + b
+
+@register.simple_tag
 def isIn(usr, mamyToManyRel):
     if not usr.is_authenticated:
         return False
