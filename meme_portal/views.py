@@ -1,3 +1,4 @@
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import CommentForm, UserForm, UserProfileForm
@@ -198,6 +199,7 @@ def show_post(request, forum_name_slug, post_name_slug):
             new_comment.post = post
             new_comment.author = user
             new_comment.save()
+            return redirect(reverse('meme_portal:show_post', kwargs={"forum_name_slug":forum_name_slug, "post_name_slug":post_name_slug}))
     else:
         comment_form = CommentForm()
 
