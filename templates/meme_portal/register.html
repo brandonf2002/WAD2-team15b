@@ -14,24 +14,22 @@
                     <h1>Register</h1>
                     <p class="text-muted"> Please enter your details!</p> 
 				{% csrf_token %}
-				{{ user_form.as_p }}
-				{{ profile_form.as_p }}
-				<!--
-					<input type="text" name="" placeholder="Email">
-					<input type="text" name="" placeholder="Username"> 
+			<!--	{{ user_form.as_p }}-->
+					{{ profile_form.as_p }}
+				
+					<input type="email" name="email" placeholder="Email">
+					<input type="text" name="username" placeholder="Username"> 
 					<input type="password" name="password" placeholder="Password"> 
-					<input type="password" name="" placeholder="Password"> 
-				-->
-				<br><br>
+				
 					<input type="submit" name="" value="Register" href="#" />
                     <div class="col-md-12">
                     </div>
                 </form>
             </div>
         </div>
-    </div>
-	
+    </div>	
 </div>
+
 
 {% endif %}
 {% endblock %}
