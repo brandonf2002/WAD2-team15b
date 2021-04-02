@@ -27,4 +27,4 @@ class PostForm(forms.ModelForm):
 class ForumForm(forms.ModelForm):
     class Meta:
         model=Post
-        fields=('name')
+        fields=('name', )

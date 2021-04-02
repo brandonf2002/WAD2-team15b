@@ -1,7 +1,7 @@
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import CommentForm, UserForm, UserProfileForm
+from .forms import CommentForm, ForumForm, UserForm, UserProfileForm
 from meme_portal.forms import UserForm, UserProfileForm, PostForm
 from django.urls import reverse
 from django.shortcuts import redirect
@@ -272,20 +272,18 @@ def create_page(request):
     context_dict = {}
 
     if request.method=='POST' and request.user.is_authenticated:
-        forum_form=PostForm(request.POST)
+        forum_form=ForumForm(request.POST)
         if forum_form.is_valid():
-            post=forum_form.save(commit=False)
+            forum=forum_form.save(commit=False)
             user = get_object_or_404(UserProfile, user=request.user)
-            post.forum=forum
-            post.author=user
-            post.save()
-            return redirect(reverse('meme_portal:show_forum', kwargs={'forum_name_slug':forum_name_slug}))
+            forum.author=user
+            forum.save()
+            return redirect(reverse('meme_portal:show_forum', kwargs={'forum_name_slug':forum.slug}))
     else:
-        forum_form=PostForm()
+        forum_form=ForumForm()
 
-    context_dict['forum'] = forum
     context_dict['forum_form'] = forum_form
-    return render(request, "meme_portal/create_post.html", context=context_dict)
+    return render(request, "meme_portal/create_page.html", context=context_dict)
 	
 def password_reset_request(request):
 	if request.method == "POST":
