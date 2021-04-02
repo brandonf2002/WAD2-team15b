@@ -23,3 +23,8 @@ class PostForm(forms.ModelForm):
     class Meta:
         model=Post
         fields=('name','img_url')
+
+class ForumForm(forms.ModelForm):
+    class Meta:
+        model=Post
+        fields=('name')

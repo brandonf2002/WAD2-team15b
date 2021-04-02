@@ -267,22 +267,25 @@ def create_post(request,forum_name_slug):
     context_dict['post_form'] = post_form
     return render(request, "meme_portal/create_post.html", context=context_dict)
 
-# @login_required
-# def post(request,forum_name_slug):
-# 	forum = Forum.objects.get(slug=forum_name_slug)
-# 	comments=Comment.objects.filter(post=post)
-# 	post.name=name
-# 	post.img_url=img_url
-# 	post.time_posted=time_posted
-# 	post.likes=likes
-# 	author=UserProfile.objects.get(user=author)
-# 	post.author=user_profile
-# 	context_dict={'forum':forum, 'name':name, 'img_url':imr_url, 'time_posted':time_posted, 'likes':likes, 'author':author}
-# 	return render(request,'meme_portal/create_post.html', context=context_dict)
-
 @login_required
 def create_page(request):
-	return render(request,"meme_portal/create_page.html")
+    context_dict = {}
+
+    if request.method=='POST' and request.user.is_authenticated:
+        forum_form=PostForm(request.POST)
+        if forum_form.is_valid():
+            post=forum_form.save(commit=False)
+            user = get_object_or_404(UserProfile, user=request.user)
+            post.forum=forum
+            post.author=user
+            post.save()
+            return redirect(reverse('meme_portal:show_forum', kwargs={'forum_name_slug':forum_name_slug}))
+    else:
+        forum_form=PostForm()
+
+    context_dict['forum'] = forum
+    context_dict['forum_form'] = forum_form
+    return render(request, "meme_portal/create_post.html", context=context_dict)
 	
 def password_reset_request(request):
 	if request.method == "POST":
