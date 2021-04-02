@@ -150,11 +150,18 @@ def populate():
                 { 'content': 'Wrong tango bro', 'author': 'WowzersAnotherUsername',},
                 { 'content': 'Why am i doing this', 'author': 'djagoRocks',},
             ],
-            'title': 'Tango with dajngo!',
+            'title': 'Wow, I sure do with tango',
             'url': 'https://upload.wikimedia.org/wikipedia/en/2/21/Tango_drink.JPG',
             'author': 'number_1_fan',
             'likes' : ['number_1_fan'],
             'dislikes': ['I-love-cats', 'imreallyrunningoutofusernames', 'djagoRocks', 'WowzersAnotherUsername', 'IAMAUSER'],
+        },
+        {
+            'title': 'Tango with Django',
+            'url': 'https://image.slidesharecdn.com/howtotangowithdjango-160521005047/95/how-to-tangowithdjango-1-638.jpg?cb=1463792125',
+            'author': 'maxwelld90',
+            'likes' : ['I-love-cats', 'imreallyrunningoutofusernames', 'djagoRocks', 'WowzersAnotherUsername', 'IAMAUSER', 'maxwelld90', 'bob02', 'number_1_fan', 'user10'],
+            'dislikes': [],
         },
     ]
 

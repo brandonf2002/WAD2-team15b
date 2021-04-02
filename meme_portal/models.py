@@ -35,7 +35,7 @@ class Post(models.Model):
     dislikes = models.ManyToManyField(UserProfile, related_name='dislikes', blank=True)
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     #slug = models.SlugField(unique=True);
-    slug = AutoSlugField(populate_from='name')
+    slug = AutoSlugField(unique=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
