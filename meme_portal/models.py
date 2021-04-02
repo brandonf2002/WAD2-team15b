@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from autoslug import AutoSlugField
 
 class UserProfile(models.Model):
 	# This line is required. Links UserProfile to a User model instance.
@@ -33,7 +34,8 @@ class Post(models.Model):
     likes = models.ManyToManyField(UserProfile, related_name='likes', blank=True)
     dislikes = models.ManyToManyField(UserProfile, related_name='dislikes', blank=True)
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    slug = models.SlugField(unique=True);
+    #slug = models.SlugField(unique=True);
+    slug = AutoSlugField(populate_from='name')
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

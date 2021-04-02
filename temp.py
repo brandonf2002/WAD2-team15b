@@ -156,6 +156,13 @@ def populate():
             'likes' : ['number_1_fan'],
             'dislikes': ['I-love-cats', 'imreallyrunningoutofusernames', 'djagoRocks', 'WowzersAnotherUsername', 'IAMAUSER'],
         },
+        {
+            'title': 'Tango with Django',
+            'url': 'https://image.slidesharecdn.com/howtotangowithdjango-160521005047/95/how-to-tangowithdjango-1-638.jpg?cb=1463792125',
+            'author': 'maxwelld90',
+            'likes' : ['I-love-cats', 'imreallyrunningoutofusernames', 'djagoRocks', 'WowzersAnotherUsername', 'IAMAUSER', 'maxwelld90', 'bob02', 'number_1_fan', 'user10'],
+            'dislikes': [],
+        },
     ]
 
     rango_posts = [
@@ -196,22 +203,35 @@ def populate():
         },
         {
             'comments': [
-                { 'content': 'This isn\'t even funny bro', 'author': 'number_1_fan',},
+                { 'content': 'This isn\'t too funny bro', 'author': 'user10',},
             ],
             'title': 'I don\'t even know anymore',
             'url': 'https://i.redd.it/9wtdlclym0l61.jpg',
             'author': 'IAMAUSER',
             'likes' : ['imreallyrunningoutofusernames', 'bob02'],
-            'dislikes': ['I-love-cats', 'djagoRocks', 'WowzersAnotherUsername', 'IAMAUSER', 'maxwelld90', 'number_1_fan', 'user10'],
+            'dislikes': [],
         },
         {
+            'comments': [
+            ],
             'title': 'pls send help',
             'url': 'https://i.redd.it/ee8pl0ak11431.jpg',
             'author': 'IAMAUSER',
             'likes' : ['imreallyrunningoutofusernames', 'bob02', 'I-love-cats'],
+            'dislikes': ['djagoRocks', 'WowzersAnotherUsername', 'IAMAUSER', 'maxwelld90', 'number_1_fan', 'user10'],
+        },
+        {
+            'comments': [
+            ],
+            'title': 'pls send help',
+            'url': 'https://i.redd.it/ee8pl0ak11431.jpg',
+            'author': 'IAMAUSER',
+            'likes' : ['number_1_fan', 'bob02', 'I-love-cats', 'imreallyrunningoutofusernames', 'WowzersAnotherUsername'],
             'dislikes': [],
         },
         {
+            'comments': [
+            ],
             'title': 'don\'t tango with the rango',
             'url': 'https://i.redd.it/g9h7lz8ok0r21.jpg',
             'author': 'I-love-cats',
@@ -243,7 +263,7 @@ def populate():
         'cs_memes' : {'posts': cs_posts},
         'tango' : {'posts': tango_posts},
         'rango' : {'posts': rango_posts},
-        #'django' : {'posts': django_posts},
+        'django' : {'posts': django_posts},
     }
 
     for profile in users:
@@ -285,7 +305,6 @@ def add_forum(name):
 def add_post(forum, title, url, author, likes, dislikes):
     p = Post.objects.get_or_create(forum=forum, name=title, author=UserProfile.objects.get(user=(User.objects.get(username=author))))[0]
     p.img_url = url
-    print(title)
 
     for name in likes:
         p.likes.add(UserProfile.objects.get(user=(User.objects.get(username=name))))
