@@ -13,6 +13,10 @@ def populate():
         {'username': 'user10', 'password': 'world'},
         {'username': 'number_1_fan', 'password': 'WOW'},
         {'username': 'IAMAUSER', 'password': 'BBBBBBBBBBBBBBBBBBBB01'},
+        {'username': 'I-love-cats', 'password': 'Ih8Dogs'},
+        {'username': 'djagoRocks', 'password': 'I_meanThe_M0V1E'},
+        {'username': 'imreallyrunningoutofusernames', 'password': 'hopethatwasnttoolong123'},
+        {'username': 'WowzersAnotherUsername', 'password': 'HopefullyThisislast'},
     ]
 
     cat_posts = [
@@ -23,12 +27,16 @@ def populate():
             ],
             'title': 'Cat photo',
             'url': 'https://images.pexels.com/photos/320014/pexels-photo-320014.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-            'author': 'bob02'
+            'author': 'bob02',
+            'likes' : ['user10', 'number_1_fan'],
+            'dislikes': ['IAMAUSER'],
         },
         {
             'title': 'Another cat photo',
             'url': 'https://images.pexels.com/photos/416160/pexels-photo-416160.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-            'author': 'user10'
+            'author': 'user10',
+            'likes' : ['user10', 'IAMAUSER'],
+            'dislikes': ['bob02'],
         },
         {
             'comments': [
@@ -36,7 +44,9 @@ def populate():
             ],
             'title': 'Cat photo 3',
             'url': 'https://www.photopoly.net/wp-content/uploads/30042011/1.jpg',
-            'author': 'IAMAUSER'
+            'author': 'IAMAUSER',
+            'likes' : [],
+            'dislikes': ['bob02', 'IAMAUSER', 'number_1_fan'],
         },
         {
             'comments': [
@@ -45,7 +55,9 @@ def populate():
             ],
             'title': 'The last cat photo',
             'url': 'https://www.photopoly.net/wp-content/uploads/30042011/2.jpg',
-            'author': 'IAMAUSER'
+            'author': 'IAMAUSER',
+            'likes' : ['bob02', 'user10'],
+            'dislikes': ['WowzersAnotherUsername', 'imreallyrunningoutofusernames'],
         },
     ]
 
@@ -56,12 +68,16 @@ def populate():
             ],
             'title': 'Getting help online',
             'url': 'https://i.imgur.com/QEOYcAD.png',
-            'author': 'bob02'
+            'author': 'bob02',
+            'likes' : ['I-love-cats', 'djagoRocks', 'imreallyrunningoutofusernames'],
+            'dislikes': ['IAMAUSER'],
         },
         {
             'title': 'ML meme',
             'url': 'https://i.imgur.com/FzdARaX.jpeg',
-            'author': 'IAMAUSER'
+            'author': 'IAMAUSER',
+            'likes' : [],
+            'dislikes': ['bob02', 'IAMAUSER', 'WowzersAnotherUsername', 'imreallyrunningoutofusernames'],
         },
         {
             'comments': [
@@ -70,12 +86,16 @@ def populate():
             ],
             'title': 'Thanks',
             'url': 'https://i.redd.it/jx0pxoihk4o61.jpg',
-            'author': 'user10'
+            'author': 'user10',
+            'likes' : ['bob02', 'IAMAUSER', 'WowzersAnotherUsername', 'imreallyrunningoutofusernames'],
+            'dislikes': [],
         },
         {
             'title': 'Proud',
             'url': 'https://i.redd.it/yjdg3jztk1o61.jpg',
-            'author': 'number_1_fan'
+            'author': 'number_1_fan',
+            'likes' : ['user10', 'djagoRocks'],
+            'dislikes': ['I-love-cats', 'number_1_fan'],
         },
         {
             'comments': [
@@ -85,7 +105,9 @@ def populate():
             ],
             'title': 'Another meme',
             'url': 'https://i.redd.it/tz0pzdj5g2o61.png',
-            'author': 'bob02'
+            'author': 'bob02',
+            'likes' : ['WowzersAnotherUsername', 'imreallyrunningoutofusernames', 'bob02'],
+            'dislikes': [],
         },
         {
             'comments': [
@@ -94,7 +116,9 @@ def populate():
             ],
             'title': 'Cpp meme',
             'url': 'https://i.redd.it/mglh78m6pxj61.jpg',
-            'author': 'number_1_fan'
+            'author': 'number_1_fan',
+            'likes' : [],
+            'dislikes': ['bob02', 'IAMAUSER', 'WowzersAnotherUsername', 'imreallyrunningoutofusernames', 'user10', 'I-love-cats', 'djagoRocks', 'number_1_fan'],
         },
     ]
 
@@ -109,7 +133,7 @@ def populate():
     for name, forum_data in forums.items():
         forum = add_forum(name=name)
         for p in forum_data['posts']:
-            post = add_post(forum=forum, title=p['title'], url=p['url'], author=p['author'])
+            post = add_post(forum=forum, title=p['title'], url=p['url'], author=p['author'], likes=p['likes'], dislikes=p['dislikes'])
             if 'comments' in p:
                 for c in p['comments']:
                     add_comment(post, c['content'], c['author']);
@@ -139,9 +163,14 @@ def add_forum(name):
 
     return f
 
-def add_post(forum, title, url, author):
+def add_post(forum, title, url, author, likes, dislikes):
     p = Post.objects.get_or_create(forum=forum, name=title, author=UserProfile.objects.get(user=(User.objects.get(username=author))))[0]
     p.img_url = url
+
+    for name in likes:
+        p.likes.add(UserProfile.objects.get(user=(User.objects.get(username=name))))
+    for name in dislikes:
+        p.dislikes.add(UserProfile.objects.get(user=(User.objects.get(username=name))))
 
     p.save();
 
