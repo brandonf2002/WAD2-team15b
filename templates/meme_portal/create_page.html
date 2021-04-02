@@ -7,19 +7,31 @@
 <div class="container">
 <br>
   <h1 >Create Page </h1>
-  <form class="form-horizontal">
-      <div class="form-group">
+  <form method="post" action="{% url 'meme_portal:create_page' %}" class="form-horizontal">
+    {% csrf_token %}
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputEmail3" placeholder="Name">
-          <br>
-          <textarea class="form-control" rows="4" placeholder="Description"></textarea>
-        </div>
-        <div>
-          <br>
-    			<input type="submit" class="btn btn-secondary" name="create_page" value="Create Page" href="#">
-        </div>
+          {{ forum_form.as_p }}
+        <!-- <input type="text" class="form-control" id="name" name="name" placeholder="Name"> -->
+        <!-- <br> -->
+        <!-- <input type="text" class="form-control" id="img_url" name="img_url" placeholder="Image URL" > -->
+        <!-- create url preview -->
+        <br>
+        <input type="submit" class="btn btn-secondary" name="create_page" value="Create Page" href="#">
       </div>
       </form>
+  <!-- <form class="form-horizontal"> -->
+  <!--     <div class="form-group"> -->
+  <!--       <div class="col-sm-10"> -->
+  <!--         <input type="text" class="form-control" id="inputEmail3" placeholder="Name"> -->
+  <!--         <br> -->
+  <!--         <textarea class="form-control" rows="4" placeholder="Description"></textarea> -->
+  <!--       </div> -->
+  <!--       <div> -->
+  <!--         <br> -->
+  <!--   			<input type="submit" class="btn btn-secondary" name="create_page" value="Create Page" href="#"> -->
+  <!--       </div> -->
+  <!--     </div> -->
+  <!--     </form> -->
   </div>
 
 {% else %}

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from meme_portal.models import UserProfile, Post, Comment
+from meme_portal.models import Forum, UserProfile, Post, Comment
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -26,5 +26,5 @@ class PostForm(forms.ModelForm):
 
 class ForumForm(forms.ModelForm):
     class Meta:
-        model=Post
+        model=Forum
         fields=('name', )
