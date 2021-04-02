@@ -8,13 +8,13 @@
   <div class="form-group">
 <br>
   <h1 >Create Post </h1>
-  <form method="post" action="{% url 'meme_portal:create_post' %}" class="form-horizontal">
+  <form method="post" action="{% url 'meme_portal:create_post' forum.slug %}" class="form-horizontal">
     {% csrf_token %}
         <div class="col-sm-10">
           {{ post_form.as_p }}
-        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
-        <br>
-        <input type="text" class="form-control" id="img_url" name="img_url" placeholder="Image URL" >
+        <!-- <input type="text" class="form-control" id="name" name="name" placeholder="Name"> -->
+        <!-- <br> -->
+        <!-- <input type="text" class="form-control" id="img_url" name="img_url" placeholder="Image URL" > -->
         <!-- create url preview -->
         <br>
     		<input type="submit" class="btn btn-secondary" name="create_post" value="Create Post" href="#">

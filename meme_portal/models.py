@@ -26,7 +26,7 @@ class Forum(models.Model):
         return self.name;
 
 class Post(models.Model):
-    forum = models.ForeignKey(Forum, on_delete=models.CASCADE)
+    forum = models.ForeignKey(Forum, on_delete=models.CASCADE, related_name='forum')
     name = models.CharField(max_length=128)
     img_url = models.URLField()
     time_posted = models.DateTimeField(default=timezone.now)

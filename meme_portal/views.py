@@ -206,7 +206,6 @@ def show_post(request, forum_name_slug, post_name_slug):
     context_dict['post'] = post
     context_dict['forum'] = forum
     context_dict['comments'] = comments
-    context_dict['new_comment'] = new_comment
     context_dict['comment_forum'] = comment_form
     return render(request=request, template_name='meme_portal/post.html', context=context_dict)
 
@@ -242,47 +241,44 @@ def dislike_link(request, forum_name_slug, post_name_slug):
 
 @login_required
 def user_logout(request):
-	# Since we know the user is logged in, we can now just log them out.
-	logout(request)
-	# Take the user back to the homepage.
-	return redirect(reverse('meme_portal:logout'))
+    # Since we know the user is logged in, we can now just log them out.
+    logout(request)
+    # Take the user back to the homepage.
+    return redirect(reverse('meme_portal:logout'))
 
 @login_required
 def create_post(request,forum_name_slug):
-	try:
-		forum = Forum.objects.get(slug=forum_name_slug)
-	except Forum.DoesNotExist:
-		forum=None
+    forum = get_object_or_404(Forum, slug=forum_name_slug)
+    context_dict = {}
 
-	if forum is None:
-		return redirect('/forum/')
+    if request.method=='POST' and request.user.is_authenticated:
+        post_form=PostForm(request.POST)
+        if post_form.is_valid():
+            post=post_form.save(commit=False)
+            user = get_object_or_404(UserProfile, user=request.user)
+            post.forum=forum
+            post.author=user
+            post.save()
+            return redirect(reverse('meme_portal:show_forum', kwargs={'forum_name_slug':forum_name_slug}))
+    else:
+        post_form=PostForm()
 
-	form=PostForm()
-	if request.method=='POST':
-		form=PostForm(request.POST)
-		if form.is_valid():
-			post=form.save(commit=False)
-			post.forum=forum
-			user=UserProfile.objects.get(user=user)
-			post.author=user
-			post.save()
-			return redirect(reverse('meme_portal:forum',
-									kwargs={'forum_name_slug':forum_name_slug}))
-	else:
-		return render(request, "meme_portal/create_post.html",{'form':form})
+    context_dict['forum'] = forum
+    context_dict['post_form'] = post_form
+    return render(request, "meme_portal/create_post.html", context=context_dict)
 
-@login_required
-def post(request,forum_name_slug):
-	forum = Forum.objects.get(slug=forum_name_slug)
-	comments=Comment.objects.filter(post=post)
-	post.name=name
-	post.img_url=img_url
-	post.time_posted=time_posted
-	post.likes=likes
-	author=UserProfile.objects.get(user=author)
-	post.author=user_profile
-	context_dict={'forum':forum, 'name':name, 'img_url':imr_url, 'time_posted':time_posted, 'likes':likes, 'author':author}
-	return render(request,'meme_portal/create_post.html', context=context_dict)
+# @login_required
+# def post(request,forum_name_slug):
+# 	forum = Forum.objects.get(slug=forum_name_slug)
+# 	comments=Comment.objects.filter(post=post)
+# 	post.name=name
+# 	post.img_url=img_url
+# 	post.time_posted=time_posted
+# 	post.likes=likes
+# 	author=UserProfile.objects.get(user=author)
+# 	post.author=user_profile
+# 	context_dict={'forum':forum, 'name':name, 'img_url':imr_url, 'time_posted':time_posted, 'likes':likes, 'author':author}
+# 	return render(request,'meme_portal/create_post.html', context=context_dict)
 
 @login_required
 def create_page(request):
