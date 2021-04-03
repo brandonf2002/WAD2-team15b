@@ -6,6 +6,8 @@ div.post {
   overflow: hidden;
   display: block;
   margin: 5px;
+  max-height: 600px;
+  min-height: 600px;
 }
 
 div.post:hover {
@@ -13,10 +15,8 @@ div.post:hover {
 }
 
 div.post img {
-  max-width: none;
-  min-width: 100%;
-  max-height: 400px;
-  min-height: 400px;
+  object-fit: contain; /* Do not scale the image */
+  object-position: center; /* Center the image within the element */
 }
 
 div.title {
@@ -45,4 +45,44 @@ button.button_dislike img {
   min-width: 100%;
   max-height: 25px;
   min-height: 25px;
+}
+
+div.image-wrap-2 {
+  display: block;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  margin-bottom: 30px;
+  background-color:  	#E8E8E8;
+}
+
+div.image-wrap-2 .image-info {
+  text-align: center;
+}
+
+div.image-wrap-2 .image-info h4 {
+  color: #111; 
+  font-family: 'Open Sans', sans-serif; 
+  font-size: 30px; 
+  font-weight: 300;
+  line-height: 32px;
+  margin: 0 0 72px; 
+  text-align: center;
+}
+
+.btn-outline {
+  border-color: #000;
+  color: #000;
+  border-width: 2px;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: .1em;
+}
+
+div.image-wrap-2 .post_img {
+  object-fit: contain; /* Do not scale the image */
+  object-position: center; /* Center the image within the element */
+  width: 100%;
+  min-height: 25vh;
+  max-height: 25vh;
 }
