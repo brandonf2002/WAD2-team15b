@@ -1,3 +1,4 @@
+from django.db.models.aggregates import Count
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -22,14 +23,24 @@ from django.utils.encoding import force_bytes
 from django.contrib import messages
 
 def index(request):
-    forum_list = Forum.objects.order_by('?')[:5]
+    forums_with_posts = Forum.objects.filter(posts__isnull=False).distinct()
+    forum_list = []
 
+    # Weird solution to assure that all forums displayed on index page have
+    # at least some post, works however
+    for i in range(max(5, len(forums_with_posts))):
+        x = forums_with_posts.order_by('?').first()
+        while x in forum_list:
+            x = forums_with_posts.order_by('?').first()
+        forum_list.append(x)
+
+    # here we add the top 3 posts to the a dict to be passed to the index page
     forum_data = []
     for i in forum_list:
         forum_data.append(
             {
                 'forum': i, 
-                'posts': Post.objects.filter(forum=i).order_by('-likes')[:3]
+                'posts': Post.objects.filter(forum=i).annotate(like_count=Count('likes')).order_by('-like_count')[:3]
             }
         )
 

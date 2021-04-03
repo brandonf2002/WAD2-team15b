@@ -13,11 +13,11 @@
 
 	<br>
 	{% if user.is_authenticated %}
-		<h3 style="padding-left:20px;">Welcome Back {{ user.username }}</h3>
+		<h3 class="text-center" style="padding-left:20px;">Welcome Back {{ user.username }}</h3>
 	{% else %}
-		<h3 style="padding-left:20px;">Welcome to meme_portal</h3>
+		<h3 class="text-center" style="padding-left:20px;">Welcome to meme_portal</h3>
 	{% endif %}
-	<h3 style="padding-left:20px;">Here are a few forums you might like!</h3>
+	<h3 class="text-center" style="padding-left:20px;">Here are a few forums you might like!</h3>
 	<br>
 
 	{% if forum_data %}
@@ -39,7 +39,9 @@
 					<div class="carousel-inner">
 						{% for post in forum.posts %}
 							<div class={% if forloop.first %}"carousel-item active"{% else %}"carousel-item"{% endif %}>
-								<img class="d-block w-100" src="{{ post.img_url }}" alt="{{ post.name }}">
+								<a href="{% url 'meme_portal:show_forum' forum.forum.slug %}">
+									<img class="d-block w-100" src="{{ post.img_url }}" alt="{{ post.name }}">
+								</a>
 								<div class="carousel-caption d-none d-md-block">
 									<h3>{{ post.name }}</h3>
 									<p>By - {{ post.author.user.username }}</p>
