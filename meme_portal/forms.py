@@ -15,6 +15,7 @@ class UserProfileForm(forms.ModelForm):
         fields = ('website', 'picture',)
 
 class CommentForm(forms.ModelForm):
+    content = forms.CharField(widget=forms.Textarea, label='')
     class Meta:
         model = Comment
         fields = ('content',)

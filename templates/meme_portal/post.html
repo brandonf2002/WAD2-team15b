@@ -111,51 +111,107 @@
 {% endblock %}
 
 {% block body_block %}
-	{% isIn user post.likes as hasLiked %}
-	{% isIn user post.dislikes as hasDisliked %}
-	<div class="img_display">
-		<div class="title">{{ post.name }} - by {{ post.author }}</div>
-		<a target="_blank" href="{{ post.img_url }}">
-			<img src="{{ post.img_url }}" alt="{{ post.name }}" class="post_pic"/>
-		</a>
-		<div class="buttons">
-			<ul>
-				<li>
-					<button class="button_like" type="submit" clicked="{{ hasLiked }}" logged_in={{ user.is_authenticated }} post="{{ post.slug }}" post_url="{% url 'meme_portal:like_post' forum.slug post.slug %}">
-						<img src="{% if hasLiked %}{% static 'images/forum/like.png' %}{% else %}{% static 'images/forum/like-grey.png' %}{% endif %}" post="{{ post.slug }}"/>
-					</button>
-				</li>
-				<li class="like_count" post="{{ post.slug }}" >{% subtract post.likes.count post.dislikes.count %}</li>
-				<li>
-					<button class="button_dislike" type="submit" clicked="{{ hasDisliked }}" logged_in={{ user.is_authenticated }} post="{{ post.slug }}" post_url="{% url 'meme_portal:dislike_post' forum.slug post.slug %}">
-						<img src="{% if hasDisliked %}{% static 'images/forum/dislike.png' %}{% else %}{% static 'images/forum/dislike-grey.png' %}{% endif %}" post="{{ post.slug }}"/>
-					</button>
-				</li>
-			</ul>
-		</div>
-	</div>
+{% comment %}
+	<!-- {% isIn user post.likes as hasLiked %} -->
+	<!-- {% isIn user post.dislikes as hasDisliked %} -->
+	<!-- <div class="img_display"> -->
+	<!-- 	<div class="title">{{ post.name }} - by {{ post.author }}</div> -->
+	<!-- 	<a target="_blank" href="{{ post.img_url }}"> -->
+	<!-- 		<img src="{{ post.img_url }}" alt="{{ post.name }}" class="post_pic"/> -->
+	<!-- 	</a> -->
+	<!-- 	<div class="buttons"> -->
+	<!-- 		<ul> -->
+	<!-- 			<li> -->
+	<!-- 				<button class="button_like" type="submit" clicked="{{ hasLiked }}" logged_in={{ user.is_authenticated }} post="{{ post.slug }}" post_url="{% url 'meme_portal:like_post' forum.slug post.slug %}"> -->
+	<!-- 					<img src="{% if hasLiked %}{% static 'images/forum/like.png' %}{% else %}{% static 'images/forum/like-grey.png' %}{% endif %}" post="{{ post.slug }}"/> -->
+	<!-- 				</button> -->
+	<!-- 			</li> -->
+	<!-- 			<li class="like_count" post="{{ post.slug }}" >{% subtract post.likes.count post.dislikes.count %}</li> -->
+	<!-- 			<li> -->
+	<!-- 				<button class="button_dislike" type="submit" clicked="{{ hasDisliked }}" logged_in={{ user.is_authenticated }} post="{{ post.slug }}" post_url="{% url 'meme_portal:dislike_post' forum.slug post.slug %}"> -->
+	<!-- 					<img src="{% if hasDisliked %}{% static 'images/forum/dislike.png' %}{% else %}{% static 'images/forum/dislike-grey.png' %}{% endif %}" post="{{ post.slug }}"/> -->
+	<!-- 				</button> -->
+	<!-- 			</li> -->
+	<!-- 		</ul> -->
+	<!-- 	</div> -->
+	<!-- </div> -->
 
-	<div class="comment_forum">
-		<form method="post" action="{% url 'meme_portal:show_post' forum.slug post.slug %}">
-			{% csrf_token %}
-			{{ comment_forum.as_p }}
-			<br>
-			<input type="submit" name="" value="Comment" href="#" />
-		</form>
-	</div>
+	<!-- <div class="comment_forum"> -->
+	<!-- 	<form method="post" action="{% url 'meme_portal:show_post' forum.slug post.slug %}"> -->
+	<!-- 		{% csrf_token %} -->
+	<!-- 		{{ comment_forum.as_p }} -->
+	<!-- 		<br> -->
+	<!-- 		<input type="submit" name="" value="Comment" href="#" /> -->
+	<!-- 	</form> -->
+	<!-- </div> -->
 
-	<div class="comment_display">
-		{% for comment in comments %}
-			<div class="comments">
-				<p class="heading">
-					{{ comment.author }}
-					<span class="time_posted">
-						{{ comment.time_posted }}
-					</span>
-				</p>
-				{{ comment.content | linebreaks }}
+	<!-- <div class="comment_display"> -->
+	<!-- 	{% for comment in comments %} -->
+	<!-- 		<div class="comments"> -->
+	<!-- 			<p class="heading"> -->
+	<!-- 				{{ comment.author }} -->
+	<!-- 				<span class="time_posted"> -->
+	<!-- 					{{ comment.time_posted }} -->
+	<!-- 				</span> -->
+	<!-- 			</p> -->
+	<!-- 			{{ comment.content | linebreaks }} -->
+	<!-- 		</div> -->
+	<!-- 		<br> -->
+    <!-- {% endfor %} -->
+	<!-- </div> -->
+{% endcomment %}
+
+	<div class="container">
+		{% if post %}
+			<div class="row justify-content-center">
+				{% isIn user post.likes as hasLiked %}
+				{% isIn user post.dislikes as hasDisliked %}
+				<div class="col">
+					<div class="image-wrap-2">
+
+						<div class="image-info">
+							<h4 class="mb-3">{{ post.name }}</h4>
+							<p class="mb-3">By - {{ post.author }}</p>
+						</div>
+
+						<a target="_blank" href="{{ post.img_url }}">
+							<img class="img-fluid post_img" src="{{ post.img_url }}" alt="{{ post.name }}"/>
+						</a>
+
+						<div class="image-info">
+							<button class="button_like" type="submit" clicked="{{ hasLiked }}" logged_in={{ user.is_authenticated }} post="{{ post.slug }}" post_url="{% url 'meme_portal:like_post' forum.slug post.slug %}">
+								<img src="{% if hasLiked %}{% static 'images/forum/like.png' %}{% else %}{% static 'images/forum/like-grey.png' %}{% endif %}" post="{{ post.slug }}"/>
+							</button>
+							<span class="like_count" post="{{ post.slug }}" >{% subtract post.likes.count post.dislikes.count %}</span>
+							<button class="button_dislike" type="submit" clicked="{{ hasDisliked }}" logged_in={{ user.is_authenticated }} post="{{ post.slug }}" post_url="{% url 'meme_portal:dislike_post' forum.slug post.slug %}">
+								<img src="{% if hasDisliked %}{% static 'images/forum/dislike.png' %}{% else %}{% static 'images/forum/dislike-grey.png' %}{% endif %}" post="{{ post.slug }}"/>
+							</button>
+						</div>
+
+					</div>
+				</div>
 			</div>
-			<br>
-    {% endfor %}
+
+			<div class="col">		 
+				<div class="comment_block">
+					<div class="create_new_comment">
+
+						<div class="user_avatar">
+							<img src="https://s3.amazonaws.com/uifaces/faces/twitter/BillSKenney/73.jpg">
+						</div>
+
+						<form method="post" action="{% url 'meme_portal:show_post' forum.slug post.slug %}">
+							<div class="input_comment">
+								{% csrf_token %}
+								{{ comment_forum.as_p }}
+							<input type="submit" name="" value="Comment" href="#" />
+						</form>
+					</div>
+				</div>
+			</div>
+		{% else %}
+			<strong>This post does not exist.</strong>
+		{% endif %}
 	</div>
+
 {% endblock %}
