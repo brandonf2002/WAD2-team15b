@@ -16,11 +16,11 @@
 {% endif %}
 <br><br>
 
-{% if forums %}
+{% if forum_data %}
 <ul>
-{% for forum in forums %}
+{% for forum in forum_data %}
 	<li style="padding-left:20px;">
-		<a href="{% url 'meme_portal:show_forum' forum.slug %}">{{ forum.name }}</a>
+		<a href="{% url 'meme_portal:show_forum' forum.forum.slug %}">{{ forum.forum.name }}</a>
 	</li>
 {% endfor %}
 </ul>
