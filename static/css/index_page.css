@@ -1,0 +1,8 @@
+.container img {
+  object-fit: none; /* Do not scale the image */
+  object-position: center; /* Center the image within the element */
+  width: 100%;
+  min-height: 600px;
+  max-height: 600px;
+  margin-bottom: 1rem;
+}
