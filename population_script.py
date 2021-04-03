@@ -228,20 +228,50 @@ def populate():
     ]
     django_posts = [
         {
-            'comments': [
-            ],
-            'title': '',
-            'url': '',
-            'author': '',
-            'likes' : [],
-            'dislikes': [],
-        },
-        {
             'title': 'Tango with Django',
             'url': 'https://image.slidesharecdn.com/howtotangowithdjango-160521005047/95/how-to-tangowithdjango-1-638.jpg?cb=1463792125',
             'author': 'maxwelld90',
             'likes' : ['I-love-cats', 'imreallyrunningoutofusernames', 'djagoRocks', 'WowzersAnotherUsername', 'IAMAUSER', 'maxwelld90', 'bob02', 'number_1_fan', 'user10'],
             'dislikes': [],
+        },
+        {
+            'comments': [
+                { 'content': 'lol not even on npm, disgraceful', 'author': 'number_1_fan',},
+                { 'content': 'Thought this was about the movie lol', 'author': 'bob02',},
+            ],
+            'title': 'STOP USING DJANGO',
+            'url': 'https://i.redd.it/ob3luy1wufl61.png',
+            'author': 'bob02',
+            'likes' : ['maxwelld90', 'WowzersAnotherUsername', 'djagoRocks'],
+            'dislikes': [],
+        },
+        {
+            'comments': [
+                { 'content': 'Gotta be the first time ive ever heard of makemessages', 'author': 'user10',},
+            ],
+            'title': 'Tab compelation be like',
+            'url': 'https://i.imgur.com/sro6l4J.jpg',
+            'author': 'number_1_fan',
+            'likes' : [ 'imreallyrunningoutofusernames', 'djagoRocks', 'I-love-cats', 'IAMAUSER'],
+            'dislikes': ['number_1_fan'],
+        },
+        {
+            'title': 'Django pillow',
+            'url': 'https://i.redd.it/4nu68s7qbps51.jpg',
+            'author': 'I-love-cats',
+            'likes' : [],
+            'dislikes': [],
+        },
+        {
+            'comments': [
+                { 'content': 'How have I also ran out of comments to write', 'author': 'bob02',},
+                { 'content': 'I wonder if anyone will ever read this', 'author': 'IAMAUSER',},
+            ],
+            'title': 'Ran out of memes about django',
+            'url': 'https://i.redd.it/utis11ygw9x41.jpg',
+            'author': 'IAMAUSER',
+            'likes' : ['WowzersAnotherUsername'],
+            'dislikes': [ 'imreallyrunningoutofusernames', 'djagoRocks', 'I-love-cats', 'IAMAUSER'],
         },
     ]
 
@@ -250,7 +280,7 @@ def populate():
         'cs_memes' : {'posts': cs_posts},
         'tango' : {'posts': tango_posts},
         'rango' : {'posts': rango_posts},
-        #'django' : {'posts': django_posts},
+        'django' : {'posts': django_posts},
     }
 
     for profile in users:
@@ -292,7 +322,6 @@ def add_forum(name):
 def add_post(forum, title, url, author, likes, dislikes):
     p = Post.objects.get_or_create(forum=forum, name=title, author=UserProfile.objects.get(user=(User.objects.get(username=author))))[0]
     p.img_url = url
-    print(title)
 
     for name in likes:
         p.likes.add(UserProfile.objects.get(user=(User.objects.get(username=name))))
