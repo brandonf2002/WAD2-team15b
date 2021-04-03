@@ -194,8 +194,8 @@
 
 			<div class="col">		 
 				<div class="comment_block">
-					<div class="create_new_comment">
 
+					<div class="create_new_comment">
 						<div class="user_avatar">
 							<img src="https://s3.amazonaws.com/uifaces/faces/twitter/BillSKenney/73.jpg">
 						</div>
@@ -204,9 +204,28 @@
 							<div class="input_comment">
 								{% csrf_token %}
 								{{ comment_forum.as_p }}
-							<input type="submit" name="" value="Comment" href="#" />
+							<input class="btn btn-outline-secondary" type="submit" name="" value="Comment" href="#" />
 						</form>
 					</div>
+
+					{% for comment in comments %}
+						<div class="new_comment">
+							<div class="user_avatar">
+								<img src="https://s3.amazonaws.com/uifaces/faces/twitter/BillSKenney/73.jpg">
+							</div>
+
+							<div class="comment_body">
+								{{ comment.content | linebreaks}}
+							</div>
+							<div class="comment_details">
+								<ul>
+									<li><i class="fa fa-clock-o"></i>{{ comment.time_posted.time }}</li>
+									<li><i class="fa fa-calendar"></i>{{ comment.time_posted.date }}</li>
+									<li><i class="fa fa-pencil"></i><span class="user">{{ comment.author }}</span></li>
+								</ul>
+							</div>
+						</div>
+					{% endfor %}
 				</div>
 			</div>
 		{% else %}
