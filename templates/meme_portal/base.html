@@ -41,87 +41,112 @@
 
 		{% endblock %}
 
-		<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <a href="http://127.0.0.1:8000/?" class="navbar-brand" style="padding-left:20px;padding-right:20px;">MemePortal</a>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarMenu">
-            <ul class="navbar-nav">
-				<li class="nav-item">
-                    <a href="http://127.0.0.1:8000/?" class="nav-link">Home</a>
-                </li>
-				<li class="nav-item">
-                    <a href="/forum/" class="nav-link">Forum</a>
-                </li>
-				<li class="nav-item">
-				            <a href="/createpage/" class="nav-link">Create Page</a>
-				        </li>
-				{% block add_nav_element %}
+		<!-- <nav class="navbar navbar-expand-sm navbar-dark bg-dark"> -->
+        <!-- <a href="http://127.0.0.1:8000/?" class="navbar-brand" style="padding-left:20px;padding-right:20px;">MemePortal</a> -->
+        <!-- <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu"> -->
+            <!-- <span class="navbar-toggler-icon"></span> -->
+        <!-- </button> -->
+        <!-- <div class="collapse navbar-collapse" id="navbarMenu"> -->
+            <!-- <ul class="navbar-nav"> -->
+		<!-- 		<li class="nav-item"> -->
+                    <!-- <a href="http://127.0.0.1:8000/?" class="nav-link">Home</a> -->
+                <!-- </li> -->
+		<!-- 		<li class="nav-item"> -->
+                    <!-- <a href="/forum/" class="nav-link">Forum</a> -->
+                <!-- </li> -->
+		<!-- 		<li class="nav-item"> -->
+		<!-- 		            <a href="/createpage/" class="nav-link">Create Page</a> -->
+		<!-- 		        </li> -->
+		<!-- 		<li class="nav-item dropdown"> -->
+		<!-- 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+		<!-- 				Account -->
+		<!-- 			</a> -->
+		<!-- 			<div class="dropdown-menu" aria-labelledby="navbarDropdown"> -->
+		<!-- 				<a class="dropdown-item" href="/account/">Account</a> -->
+		<!-- 				<a class="dropdown-item" href="/register/">Register</a> -->
+		<!-- 				<a class="dropdown-item" href="/login/">Login</a> -->
+		<!-- 				<a class="dropdown-item" href="/logout/">Logout</a> -->
+		<!-- 			</div> -->
+		<!-- 		</li> -->
+            <!-- </ul> -->
+		<!-- </div> -->
 
-				{% endblock %}
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Account
-					</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="/account/">Account</a>
-						<a class="dropdown-item" href="/register/">Register</a>
-						<a class="dropdown-item" href="/login/">Login</a>
-						<a class="dropdown-item" href="/logout/">Logout</a>
-					</div>
-				</li>
-            </ul>
-		</div>
-
-		<form class="d-flex" method="GET" style="padding-left:20px;padding-right:20px;">
-			<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-			<button class="btn btn-outline-success" type="submit">Search</button>
-		</form>
-        </div>
-    </nav>
+		<!-- <form class="d-flex" method="GET" style="padding-left:20px;padding-right:20px;"> -->
+		<!-- 	<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
+		<!-- 	<button class="btn btn-outline-success" type="submit">Search</button> -->
+		<!-- </form> -->
+        <!-- </div> -->
+    <!-- </nav> -->
 
 
 	</head>
 	<body>
+		<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+			<div class="container-fluid">
+				<a href="{% url 'meme_portal:index' %}" class="navbar-brand" >MemePortal</a>
+
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarResponsive">
+					<span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-between" id="navbarResponsive">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item">
+							<a href="{% url 'meme_portal:forum' %}" class="nav-link">Random Page</a>
+						</li>
+						<li class="nav-item">
+							<a href="{% url 'meme_portal:create_page' %}" class="nav-link">Create New Page</a>
+						</li>
+						{% block add_nav_element %}
+
+						{% endblock %}
+					</ul>
+					<ul class="navbar-nav">
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								My Account
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="{% url 'meme_portal:account' %}">Account</a>
+								<a class="dropdown-item" href="{% url 'meme_portal:register' %}">Register</a>
+								<a class="dropdown-item" href="{% url 'meme_portal:login' %}">Login</a>
+								<a class="dropdown-item" href="{% url 'meme_portal:logout' %}">Logout</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
 
 		<div id="page-container">
 			<div id="content-wrap">
-
 			{% block body_block %}
+
 			{% endblock %}
-		<br>
-
-
+			</div>
 		</div>
-		{% block footer_block %}
-		{% endblock %}
+
 		<footer id="footer">
+			{% block footer_block %}
+
+			{% endblock %}
 			<div class="container">
-				<div class="row justify-content-center"></div>
-			</div>
-			<div class="container" ></div>
-			<div class="row gy-4" style="position:absolute;
-										 width:300px;
-										 bottom:0px;
-										 right:25%;
-										 left:50%;
-										 margin-left:-150px;">
-				<a href="https://www.facebook.com/" class="fa fa-facebook"></a>
-				<a href="https://twitter.com/?lang=en-gb" class="fa fa-twitter"></a>
-				<a href="https://www.google.com/" class="fa fa-google"></a>
-				<a href="https://www.youtube.com/" class="fa fa-youtube"></a>
-				<a href="https://www.instagram.com/" class="fa fa-instagram"></a>
-				<a href="https://www.reddit.com/" class="fa fa-reddit"></a>
-
-
-
-			</div>
+				<!-- <div class="row justify-content-center"></div> -->
+			<!-- </div> -->
+			<!-- <div class="container" ></div> -->
+			<!-- <div class="row gy-4" style="position:absolute; -->
+				<!-- 						 width:300px; -->
+				<!-- 						 bottom:0px; -->
+				<!-- 						 right:25%; -->
+				<!-- 						 left:50%; -->
+				<!-- 						 margin-left:-150px;"> -->
+				<!-- <a href="https://www.facebook.com/" class="fa fa-facebook"></a> -->
+				<!-- <a href="https://twitter.com/?lang=en-gb" class="fa fa-twitter"></a> -->
+				<!-- <a href="https://www.google.com/" class="fa fa-google"></a> -->
+				<!-- <a href="https://www.youtube.com/" class="fa fa-youtube"></a> -->
+				<!-- <a href="https://www.instagram.com/" class="fa fa-instagram"></a> -->
+				<!-- <a href="https://www.reddit.com/" class="fa fa-reddit"></a> -->
+			<!-- </div> -->
 		</footer>
-
-		<!-- JavaScript -->
-		<script src="{% static "js/image_preview.js" %}"></script>
-
 	</body>
-
 </html>
