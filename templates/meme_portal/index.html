@@ -1,36 +1,69 @@
 {% extends 'meme_portal/base.html' %}
 {% load staticfiles %}
 
+{% block add_css %}
+	<link rel="stylesheet"  href="{% static "css/index_page.css" %}"/>
+{% endblock %}
+
 {% block title_block %}
     Home
 {% endblock %}
 
 {% block body_block %}
 
-<div>
-<br>
-{% if user.is_authenticated %}
-	<h3 style="padding-left:20px;">Welcome Back {{ user.username }}!</h3>
-{% else %}
-	<h3 style="padding-left:20px;">Welcome to meme_portal</h3>
-{% endif %}
-<br><br>
+	<br>
+	{% if user.is_authenticated %}
+		<h3 style="padding-left:20px;">Welcome Back {{ user.username }}</h3>
+	{% else %}
+		<h3 style="padding-left:20px;">Welcome to meme_portal</h3>
+	{% endif %}
+	<h3 style="padding-left:20px;">Here are a few forums you might like!</h3>
+	<br>
 
-{% if forum_data %}
-<ul>
-{% for forum in forum_data %}
-	<li style="padding-left:20px;">
-		<a href="{% url 'meme_portal:show_forum' forum.forum.slug %}">{{ forum.forum.name }}</a>
-	</li>
-{% endfor %}
-</ul>
-{% else %}
-	<strong style="padding-left:20px;">There are no posts present.</strong>
-{% endif %}
+	{% if forum_data %}
+		{% for forum in forum_data %}
+			<div class="container">
+				<h2 class="text-center visit_link"><a href="{% url 'meme_portal:show_forum' forum.forum.slug %}">Visit {{ forum.forum.name }}</a></h2>
+				<div id="myCarousel{{ forloop.counter0 }}" class="carousel slide" data-interval="false" data-ride="carousel">
+					<!-- Indicators -->
+					<ol class="carousel-indicators">
+						{% for post in forum.posts %}
+							<li 
+								data-target="#myCarousel{{ forloop.counter0 }}" 
+								data-slide-to="{{ forloop.counter0 }}" 
+								{% if forloop.first %} class="active" {% endif %}></li>
+						{% endfor %}
+					</ol>
 
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner">
+						{% for post in forum.posts %}
+							<div class={% if forloop.first %}"carousel-item active"{% else %}"carousel-item"{% endif %}>
+								<img class="d-block w-100" src="{{ post.img_url }}" alt="{{ post.name }}">
+								<div class="carousel-caption d-none d-md-block">
+									<h3>{{ post.name }}</h3>
+									<p>By - {{ post.author.user.username }}</p>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
 
-
-	
+					<!-- Left and right controls -->
+					<a class="carousel-control-prev" href="#myCarousel{{ forloop.counter0 }}" data-slide="prev" role="button">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+					</a>
+					<a class="carousel-control-next" href="#myCarousel{{ forloop.counter0 }}" data-slide="next" role="button">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="sr-only">Next</span>
+					</a>
+				</div>
+				<br>
+			</div>
+		{% endfor %}
+	{% else %}
+		<strong style="padding-left:20px;">There are no forums present.</strong>
+	{% endif %}
 {% endblock %}
 
 {% block footer_block %}
