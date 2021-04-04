@@ -13,6 +13,11 @@
 								<img class="profile-pic"  src="{{request.user.userprofile.picture.url}}"/>
 								<p style="padding-left:20px;">Visits: {{ visits }}</p>
 	<div class="col-md-12">
+		<form method="POST" action="" enctype="multipart/form-data">
+			{% csrf_token %}
+			{{form.as_p}}
+			<input class="btn btn-secondary" type="submit" name="Update information">
+		</form>
 	</div>
 </div>
 

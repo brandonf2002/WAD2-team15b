@@ -39,7 +39,7 @@ def index(request):
     for i in forum_list:
         forum_data.append(
             {
-                'forum': i, 
+                'forum': i,
                 'posts': Post.objects.filter(forum=i).annotate(like_count=Count('likes')).order_by('-like_count')[:3]
             }
         )
@@ -168,10 +168,20 @@ def user_login(request):
 		# blank dictionary object...
 		return render(request, 'meme_portal/login.html')
 
+@login_required(login_url='login')
 def user_account(request):
-	visitor_cookie_handler(request)
+    visitor_cookie_handler(request)
+    userprofile=request.user.userprofile
+    form=UserProfileForm(instance=userprofile)
+    context_dict = {'form':form}
 
-	return render(request, 'meme_portal/account.html')
+    if request.method== 'POST':
+        form=UserProfileForm(request.POST, request.FILES, instance=userprofile)
+        if form.is_valid():
+            form.save()
+
+
+    return render(request, 'meme_portal/account.html', context=context_dict)
 
 def show_forum(request, forum_name_slug):
     context_dict = {}
@@ -293,7 +303,7 @@ def create_page(request):
 
     context_dict['forum_form'] = forum_form
     return render(request, "meme_portal/create_page.html", context=context_dict)
-	
+
 def password_reset_request(request):
 	if request.method == "POST":
 		password_reset_form = PasswordResetForm(request.POST)
