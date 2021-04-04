@@ -18,3 +18,8 @@ def isIn(usr, mamyToManyRel):
         return False
     usrProf = get_object_or_404(UserProfile, user=usr)
     return usrProf in mamyToManyRel.all()
+
+def getUserProf(usr):
+    if not usr.is_authenticated:
+        return False
+    return get_object_or_404(UserProfile, user=usr)
