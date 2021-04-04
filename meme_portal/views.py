@@ -171,7 +171,7 @@ def user_login(request):
 @login_required(login_url='login')
 def user_account(request):
     visitor_cookie_handler(request)
-    userprofile=request.user.userprofile
+    userprofile=request.user.userProfile
     form=UserProfileForm(instance=userprofile)
     context_dict = {'form':form}
 
