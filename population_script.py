@@ -12,15 +12,51 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def populate():
     users = [
-        {'username': 'bob02', 'password': 'hello', 'profile_pic': '/media/profile_images/bob_02_profile.png'},
-        {'username': 'user10', 'password': 'world', 'profile_pic': '/media/profile_images/user10_profile_pic.png'},
-        {'username': 'number_1_fan', 'password': 'WOW', 'profile_pic': '/media/profile_images/number_1_fan.jpg'},
-        {'username': 'IAMAUSER', 'password': 'BBBBBBBBBBBBBBBBBBBB01', 'profile_pic': '/media/profile_images/IAMUSER_profile.jpg'},
-        {'username': 'I-love-cats', 'password': 'Ih8Dogs', 'profile_pic': '/media/profile_images/I-lvoe_cats_profile.jpg'},
-        {'username': 'maxwelld90', 'password': 'tangoWithDjango', 'profile_pic': '/media/profile_images/rango.jpg'},
-        {'username': 'djagoRocks', 'password': 'I_meanThe_M0V1E', 'profile_pic': '/media/profile_images/djangoRocks.jpg'},
-        {'username': 'imreallyrunningoutofusernames', 'password': 'hopethatwasnttoolong123', 'profile_pic': '/media/profile_images/imreally_profile.jpg'},
-        {'username': 'WowzersAnotherUsername', 'password': 'HopefullyThisislast', 'profile_pic': '/media/profile_images/Wowzers_profile.jpg'},
+        {
+            'username': 'bob02', 
+            'password': 'hello', 
+            'profile_pic': '/media/profile_images/bob_02_profile.png'
+        },
+        {
+            'username': 'user10',
+            'password': 'world', 
+            'profile_pic': '/media/profile_images/user10_profile_pic.png'
+        },
+        {
+            'username': 'number_1_fan', 
+            'password': 'WOW',
+            'profile_pic': '/media/profile_images/number_1_fan.jpg'
+        },
+        {
+            'username': 'IAMAUSER', 
+            'password': 'BBBBBBBBBBBBBBBBBBBB01',
+            'profile_pic': '/media/profile_images/IAMUSER_profile.jpg'
+        },
+        {
+            'username': 'I-love-cats', 
+            'password': 'Ih8Dogs', 
+            'profile_pic': '/media/profile_images/I-lvoe_cats_profile.jpg'
+        },
+        {
+            'username': 'maxwelld90', 
+            'password': 'tangoWithDjango', 
+            'profile_pic': '/media/profile_images/rango.jpg'
+        },
+        {
+            'username': 'djagoRocks', 
+            'password': 'I_meanThe_M0V1E',
+            'profile_pic': '/media/profile_images/djangoRocks.jpg'
+        },
+        {
+            'username': 'imreallyrunningoutofusernames', 
+            'password': 'hopethatwasnttoolong123', 
+            'profile_pic': '/media/profile_images/imreally_profile.jpg'
+        },
+        {
+            'username': 'WowzersAnotherUsername', 
+            'password': 'HopefullyThisislast', 
+            'profile_pic': '/media/profile_images/Wowzers_profile.jpg'
+        },
     ]
 
     cat_posts = [
@@ -163,8 +199,8 @@ def populate():
             'title': 'Tango with Django',
             'url': 'https://image.slidesharecdn.com/howtotangowithdjango-160521005047/95/how-to-tangowithdjango-1-638.jpg?cb=1463792125',
             'author': 'maxwelld90',
-            'likes' : ['I-love-cats', 'imreallyrunningoutofusernames', 'djagoRocks', 'WowzersAnotherUsername', 'IAMAUSER', 'maxwelld90', 'bob02', 'number_1_fan', 'user10'],
-            'dislikes': [],
+            'likes' : [],
+            'dislikes': ['I-love-cats', 'imreallyrunningoutofusernames', 'djagoRocks', 'WowzersAnotherUsername', 'IAMAUSER', 'maxwelld90', 'bob02', 'number_1_fan', 'user10'],
         },
     ]
 
@@ -180,7 +216,7 @@ def populate():
             'title': 'Tango with Django',
             'url': 'https://image.slidesharecdn.com/howtotangowithdjango-160521005047/95/how-to-tangowithdjango-1-638.jpg?cb=1463792125',
             'author': 'maxwelld90',
-            'likes' : ['I-love-cats', 'imreallyrunningoutofusernames', 'djagoRocks', 'WowzersAnotherUsername', 'IAMAUSER', 'maxwelld90', 'bob02', 'number_1_fan', 'user10'],
+            'likes' : ['I-love-cats', 'user10'],
             'dislikes': [],
         },
         {
@@ -278,12 +314,183 @@ def populate():
         },
     ]
 
+    mathmemes_posts = [
+        {
+            'title': 'If Rick Astley taught Geometry class:',
+            'url': 'https://i.redd.it/f4b4pme1m2r61.jpg',
+            'author': 'bob02',
+            'likes' : [ 'bob02', 'imreallyrunningoutofusernames'],
+            'dislikes': [],
+        },
+        {
+            'comments': [
+                { 'content': 'Yea me too bro, melts the mind', 'author': 'maxwelld90',},
+                { 'content': 'Na I\'ve gotta say i quite enjoy that fact', 'author': 'IAMAUSER',},
+            ],
+            'title': 'Complex numbers hurt my head',
+            'url': 'https://i.redd.it/pzgi0i6uq4r61.png',
+            'author': 'maxwelld90',
+            'likes' : ['imreallyrunningoutofusernames', 'number_1_fan', 'user10', 'I-love-cats'],
+            'dislikes': ['maxwelld90'],
+        },
+        {
+            'comments': [
+                { 'content': 'Aha, the man himself', 'author': 'IAMAUSER',},
+            ],
+            'title': 'Pythagoras',
+            'url': 'https://i.redd.it/o97jg87laqq61.jpg',
+            'author': 'bob02',
+            'likes' : [],
+            'dislikes': [ 'bob02', 'WowzersAnotherUsername'],
+        },
+        {
+            'title': 'Determinant Expansion by Minors to be specific.',
+            'url': 'https://i.redd.it/puyw310pmhq61.jpg',
+            'author': 'imreallyrunningoutofusernames',
+            'likes' : [ 'bob02', 'djagoRocks', 'user10'],
+            'dislikes': [],
+        },
+        {
+            'title': 'topologists too',
+            'url': 'https://i.redd.it/z7xva0ffzlq61.jpg',
+            'author': 'IAMAUSER',
+            'likes' : [ 'bob02', 'maxwelld90'],
+            'dislikes': [],
+        },
+        {
+            'comments': [
+                { 'content': 'If only we could take it all back', 'author': 'imreallyrunningoutofusernames',},
+                { 'content': 'Dam, if only I had taken Computing Science\n\nIf only', 'author': 'bob02',},
+            ],
+            'title': 'Maybe this math degree is a mistake.',
+            'url': 'https://i.redd.it/foyclbisb4q61.jpg',
+            'author': 'maxwelld90',
+            'likes' : ['maxwelld90', 'imreallyrunningoutofusernames'],
+            'dislikes': [],
+        },
+        {
+            'comments': [
+                { 'content': 'I can\'t even remember what this post was about but heres a comment anyone', 'author': 'number_1_fan',},
+            ],
+            'title': 'Gosh darn it',
+            'url': 'https://i.redd.it/y97jojwb6yp61.jpg',
+            'author': 'IAMAUSER',
+            'likes' : [ 'bob02', 'IAMAUSER'],
+            'dislikes': [],
+        },
+        {
+            'title': 'LaTeX <3',
+            'url': 'https://i.redd.it/168fl22rktq61.jpg',
+            'author': 'imreallyrunningoutofusernames',
+            'likes' : [],
+            'dislikes': ['IAMAUSER', 'bob02', 'imreallyrunningoutofusernames', 'WowzersAnotherUsername' ],
+        },
+        {
+            'title': 'Because why not',
+            'url': 'https://i.redd.it/nj9qosl4nqq61.jpg',
+            'author': 'user10',
+            'likes' : [ 'bob02'],
+            'dislikes': [],
+        },
+        {
+            'comments': [
+                { 'content': 'Aha I quite liked this one, pretty good man', 'author': 'bob02',},
+                { 'content': 'Ooh thats pretty good actually', 'author': 'IAMAUSER',},
+                { 'content': 'Lol', 'author': 'user10',},
+            ],
+            'title': 'Topologist\'s Morning routine',
+            'url': 'https://i.redd.it/3nqccqefgrp61.jpg',
+            'author': 'user10',
+            'likes' : ['user10',  'bob02', 'maxwelld90'],
+            'dislikes': [],
+        },
+    ]
+
+    history_memes_posts = [
+        {
+            'comments': [
+                { 'content': 'Heres a sample comment', 'author': 'WowzersAnotherUsername',},
+            ],
+            'title': 'I still don\'t get the connection',
+            'url': 'https://i.redd.it/ey6tmutb14r61.jpg',
+            'author': 'IAMAUSER',
+            'likes' : [ 'imreallyrunningoutofusernames', 'djagoRocks', 'I-love-cats', 'IAMAUSER'],
+            'dislikes': [],
+        },
+        {
+            'comments': [
+                { 'content': 'I don\'t think it does man, you should make a new forum for these sorts of posts', 'author': 'bob02',},
+                { 'content': 'This is another comment on the history_memes forum', 'author': 'number_1_fan',},
+            ],
+            'title': 'I thought this suits the theme!',
+            'url': 'https://i.redd.it/2hmf09tjw2r61.jpg',
+            'author': 'imreallyrunningoutofusernames',
+            'likes' : [],
+            'dislikes': [ 'bob02', 'IAMAUSER'],
+        },
+        {
+            'title': 'Colorado what\'s your deal',
+            'url': 'https://i.redd.it/iw5sdu4yg1r61.png',
+            'author': 'I-love-cats',
+            'likes' : [],
+            'dislikes': ['IAMAUSER', 'bob02', 'imreallyrunningoutofusernames', 'WowzersAnotherUsername' ],
+        },
+        {
+            'comments': [
+                { 'content': 'onokyo, not again', 'author': 'bob02',},
+                { 'content': 'This is pretty good', 'author': 'imreallyrunningoutofusernames',},
+            ],
+            'title': 'Japan\'s capital be like:',
+            'url': 'https://i.redd.it/1km1lbl00nn61.jpg',
+            'author': 'WowzersAnotherUsername',
+            'likes' : ['IAMAUSER', 'bob02', 'imreallyrunningoutofusernames', 'WowzersAnotherUsername' ],
+            'dislikes': [],
+        },
+        {
+            'title': '*cough* emus *cough*',
+            'url': 'https://i.redd.it/k3x9vi09bdo61.jpg',
+            'author': 'maxwelld90',
+            'likes' : ['maxwelld90', 'imreallyrunningoutofusernames'],
+            'dislikes': [],
+        },
+        {
+            'comments': [
+                { 'content': 'This is another comment on a post', 'author': 'IAMAUSER',},
+                { 'content': 'Wow, heres another one\n\nBy another user that is', 'author': 'WowzersAnotherUsername',},
+            ],
+            'title': 'Great success!',
+            'url': 'https://i.redd.it/rsd3cyh5jtq61.jpg',
+            'author': 'IAMAUSER',
+            'likes' : [],
+            'dislikes': [],
+        },
+        {
+            'title': 'Let us never forget those who fought against Sauron occupation.',
+            'url': 'https://i.redd.it/d2lkw8fwtkq61.jpg',
+            'author': 'IAMAUSER',
+            'likes' : ['imreallyrunningoutofusernames', 'number_1_fan', 'user10', 'I-love-cats'],
+            'dislikes': [],
+        },
+        {
+            'comments': [
+                { 'content': 'I can\'t even remember what this post was about but heres a comment anyone', 'author': 'number_1_fan',},
+            ],
+            'title': 'They had their own f\'ing army',
+            'url': 'https://i.redd.it/b7sk1t90mfl61.jpg',
+            'author': 'I-love-cats',
+            'likes' : [],
+            'dislikes': [],
+        },
+    ]
+
     forums = {
         'cat_photos' : {'posts': cat_posts},
         'cs_memes' : {'posts': cs_posts},
         'tango' : {'posts': tango_posts},
         'rango' : {'posts': rango_posts},
         'django' : {'posts': django_posts},
+        'mathmemes' : {'posts': mathmemes_posts},
+        'history_memes' : {'posts': history_memes_posts},
     }
 
     for profile in users:

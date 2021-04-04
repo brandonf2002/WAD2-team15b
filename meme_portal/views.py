@@ -24,7 +24,7 @@ def index(request):
 
     # Weird solution to assure that all forums displayed on index page have
     # at least some post, works however
-    for i in range(max(5, len(forums_with_posts))):
+    for i in range(min(5, len(forums_with_posts))):
         x = forums_with_posts.order_by('?').first()
         while x in forum_list:
             x = forums_with_posts.order_by('?').first()
@@ -187,11 +187,20 @@ def show_forum(request, forum_name_slug, sort_by="newest_first"):
 
         # This if statement sorts the posts by some amount depending on the value passed into this method
         if sort_by == "top_posts":
-            posts = Post.objects.filter(forum=forum).annotate(like_count=Count('likes')-Count('dislikes')).order_by('-like_count')
+            posts = Post.objects.filter(forum=forum).annotate(
+                like_count=Count('likes'),
+                dislike_count=Count('dislikes')
+            ).order_by('-like_count', 'dislike_count')
+
         elif sort_by == "worst_posts":
-            posts = Post.objects.filter(forum=forum).annotate(like_count=Count('likes')-Count('dislikes')).order_by('like_count')
+            posts = Post.objects.filter(forum=forum).annotate(
+                like_count=Count('likes'),
+                dislike_count=Count('dislikes')
+            ).order_by('like_count', '-dislike_count')
+
         elif sort_by == "oldest_first":
             posts = Post.objects.filter(forum=forum).order_by('time_posted')
+
         else:
             posts = Post.objects.filter(forum=forum).order_by('-time_posted')
 
