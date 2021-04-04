@@ -27,6 +27,19 @@
 	<div class="container">
 		{% if forum %}
 			<h2 class="text-center">{{ forum.name }}</h2>
+			<div class="dropdown show text-center">
+				<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Sort By
+				</a>
+
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					<a class="dropdown-item" href="{% url 'meme_portal:show_forum' forum.slug 'newest_first' %}">Newest</a>
+					<a class="dropdown-item" href="{% url 'meme_portal:show_forum' forum.slug 'oldest_first' %}">Oldest</a>
+					<a class="dropdown-item" href="{% url 'meme_portal:show_forum' forum.slug 'top_posts' %}">Best</a>
+					<a class="dropdown-item" href="{% url 'meme_portal:show_forum' forum.slug 'worst_posts' %}">Worst</a>
+				</div>
+			</div>
+			<br/>
 			{% if posts %}
 				<div class="row">
 					{% for post in posts %}

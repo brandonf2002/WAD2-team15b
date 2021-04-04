@@ -1,5 +1,4 @@
 from django.db.models.aggregates import Count
-from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import CommentForm, ForumForm, UserForm, UserProfileForm
@@ -8,8 +7,6 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
-from django.views.generic.list import ListView
-from django.views.generic import RedirectView
 from meme_portal.models import Post, Forum, Comment, UserProfile
 from datetime import datetime
 from django.contrib.auth.forms import PasswordResetForm
@@ -20,7 +17,6 @@ from django.db.models.query_utils import Q
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
-from django.contrib import messages
 
 def index(request):
     forums_with_posts = Forum.objects.filter(posts__isnull=False).distinct()
@@ -40,7 +36,7 @@ def index(request):
         forum_data.append(
             {
                 'forum': i,
-                'posts': Post.objects.filter(forum=i).annotate(like_count=Count('likes')).order_by('-like_count')[:3]
+                'posts': Post.objects.filter(forum=i).annotate(like_count=Count('likes')-Count('dislikes')).order_by('-like_count')[:3]
             }
         )
 
@@ -183,12 +179,21 @@ def user_account(request):
 
     return render(request, 'meme_portal/account.html', context=context_dict)
 
-def show_forum(request, forum_name_slug):
+def show_forum(request, forum_name_slug, sort_by="newest_first"):
     context_dict = {}
 
     try:
         forum = Forum.objects.get(slug=forum_name_slug)
-        posts = Post.objects.filter(forum=forum)
+
+        # This if statement sorts the posts by some amount depending on the value passed into this method
+        if sort_by == "top_posts":
+            posts = Post.objects.filter(forum=forum).annotate(like_count=Count('likes')-Count('dislikes')).order_by('-like_count')
+        elif sort_by == "worst_posts":
+            posts = Post.objects.filter(forum=forum).annotate(like_count=Count('likes')-Count('dislikes')).order_by('like_count')
+        elif sort_by == "oldest_first":
+            posts = Post.objects.filter(forum=forum).order_by('time_posted')
+        else:
+            posts = Post.objects.filter(forum=forum).order_by('-time_posted')
 
         context_dict['posts'] = posts
         context_dict['forum'] = forum
@@ -263,7 +268,7 @@ def user_logout(request):
     # Since we know the user is logged in, we can now just log them out.
     logout(request)
     # Take the user back to the homepage.
-    return redirect(reverse('meme_portal:logout'))
+    return redirect(reverse('meme_portal:index'))
 
 @login_required
 def create_post(request,forum_name_slug):
