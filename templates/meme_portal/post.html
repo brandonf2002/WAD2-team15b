@@ -64,7 +64,7 @@
 
 					<div class="create_new_comment">
 						<div class="user_avatar">
-							<img src="">
+							<img src="{{ user.userProfile.picture.url }}">
 						</div>
 
 						<form method="post" action="{% url 'meme_portal:show_post' forum.slug post.slug %}">
@@ -78,7 +78,7 @@
 					{% for comment in comments %}
 						<div class="new_comment">
 							<div class="user_avatar">
-								<img src="">
+								<img src="{{ comment.author.picture.url }}">
 							</div>
 
 							<div class="comment_body">
