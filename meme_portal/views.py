@@ -179,8 +179,8 @@ def user_account(request):
 
     return render(request, 'meme_portal/account.html', context=context_dict)
 
-def show_forum(request, forum_name_slug, sort_by="newest_first"):
-    context_dict = {}
+def show_forum(request, forum_name_slug, sort_by="top_posts"):
+    context_dict = {'sorting': sort_by}
 
     try:
         forum = Forum.objects.get(slug=forum_name_slug)
@@ -201,7 +201,7 @@ def show_forum(request, forum_name_slug, sort_by="newest_first"):
         elif sort_by == "oldest_first":
             posts = Post.objects.filter(forum=forum).order_by('time_posted')
 
-        else:
+        elif sort_by == "newest_first":
             posts = Post.objects.filter(forum=forum).order_by('-time_posted')
 
         context_dict['posts'] = posts
