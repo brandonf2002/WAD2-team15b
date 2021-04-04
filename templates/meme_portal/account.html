@@ -6,6 +6,7 @@
 {% if user.is_authenticated %}
 	<br>
 	<div class="row">
+<<<<<<< HEAD
 		<dic class="container xxl">
 				<dic class="col-md-6">
 						<dic class="card">
@@ -18,8 +19,19 @@
 			{{form.as_p}}
 			<input class="btn btn-secondary" type="submit" name="Update information">
 		</form>
+=======
+		<div class="container xxl">
+			<div class="col">
+				<div class="card">
+					<br>
+					<h3 style="padding:10px;">Welcome Back {{ user.username }}!</h3>
+					<img class="profile-pic" style="height: 65px; width: 65px;" src="{{ user.userProfile.picture.url }}"/>
+					<p style="padding-left:10px;">Visits: {{ visits }}</p>
+				</div>
+			</div>
+		</div>
+>>>>>>> eb683a88ccc0483faf5bb820b19ea9256634dea6
 	</div>
-</div>
 
 {% else %}
 	<a href="{% url 'meme_portal:login' %}">You are not Logged in</a><br />

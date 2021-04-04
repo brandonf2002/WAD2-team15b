@@ -1,23 +1,26 @@
 import os
 import django
+from django.core.files.base import ContentFile
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'gif_and_meme_portal.settings')
 django.setup()
 
 from meme_portal.models import Forum, Post, Comment, UserProfile
 from django.contrib.auth.models import User
+from django.core.files import File
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def populate():
     users = [
-        {'username': 'bob02', 'password': 'hello'},
-        {'username': 'user10', 'password': 'world'},
-        {'username': 'number_1_fan', 'password': 'WOW'},
-        {'username': 'IAMAUSER', 'password': 'BBBBBBBBBBBBBBBBBBBB01'},
-        {'username': 'I-love-cats', 'password': 'Ih8Dogs'},
-        {'username': 'maxwelld90', 'password': 'tangoWithDjango'},
-        {'username': 'djagoRocks', 'password': 'I_meanThe_M0V1E'},
-        {'username': 'imreallyrunningoutofusernames', 'password': 'hopethatwasnttoolong123'},
-        {'username': 'WowzersAnotherUsername', 'password': 'HopefullyThisislast'},
+        {'username': 'bob02', 'password': 'hello', 'profile_pic': '/media/profile_images/bob_02_profile.png'},
+        {'username': 'user10', 'password': 'world', 'profile_pic': '/media/profile_images/user10_profile_pic.png'},
+        {'username': 'number_1_fan', 'password': 'WOW', 'profile_pic': '/media/profile_images/number_1_fan.jpg'},
+        {'username': 'IAMAUSER', 'password': 'BBBBBBBBBBBBBBBBBBBB01', 'profile_pic': '/media/profile_images/IAMUSER_profile.jpg'},
+        {'username': 'I-love-cats', 'password': 'Ih8Dogs', 'profile_pic': '/media/profile_images/I-lvoe_cats_profile.jpg'},
+        {'username': 'maxwelld90', 'password': 'tangoWithDjango', 'profile_pic': '/media/profile_images/rango.jpg'},
+        {'username': 'djagoRocks', 'password': 'I_meanThe_M0V1E', 'profile_pic': '/media/profile_images/djangoRocks.jpg'},
+        {'username': 'imreallyrunningoutofusernames', 'password': 'hopethatwasnttoolong123', 'profile_pic': '/media/profile_images/imreally_profile.jpg'},
+        {'username': 'WowzersAnotherUsername', 'password': 'HopefullyThisislast', 'profile_pic': '/media/profile_images/Wowzers_profile.jpg'},
     ]
 
     cat_posts = [
@@ -284,7 +287,7 @@ def populate():
     }
 
     for profile in users:
-        add_user_profile(name=profile['username'], psswrd=profile['password'])
+        add_user_profile(name=profile['username'], psswrd=profile['password'], pic=profile['profile_pic'])
 
     for name, forum_data in forums.items():
         forum = add_forum(name=name)
@@ -299,7 +302,7 @@ def populate():
             for c in Comment.objects.filter(post=p):
                 print(f'-> forum: {f}, post: {p}, comment: {c}')
 
-def add_user_profile(name, psswrd):
+def add_user_profile(name, psswrd, pic):
     try:
         u = User.objects.create_user(name, password=psswrd)
     except django.db.utils.IntegrityError:
@@ -308,6 +311,10 @@ def add_user_profile(name, psswrd):
     u.save()
      
     up = UserProfile.objects.get_or_create(user=u)[0]
+    with open(BASE_DIR + pic, 'rb') as f:
+        data = f.read()
+
+    up.picture.save(f'{name}_porfile_pic', ContentFile(data))
     up.save()
 
     return up

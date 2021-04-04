@@ -6,7 +6,7 @@ from autoslug import AutoSlugField
 
 class UserProfile(models.Model):
 	# This line is required. Links UserProfile to a User model instance.
-	user = models.OneToOneField(User, blank=True, on_delete=models.CASCADE)
+	user = models.OneToOneField(User, blank=True, on_delete=models.CASCADE, related_name='userProfile')
 	# The additional attributes we wish to include.
 	email = models.EmailField(blank=True)
 	website = models.URLField(blank=True)
