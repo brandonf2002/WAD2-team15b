@@ -1,6 +1,8 @@
 from django.urls import path
 from meme_portal import views
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'meme_portal'
 
@@ -20,5 +22,7 @@ urlpatterns = [
     path('forum/<slug:forum_name_slug>/<slug:post_name_slug>/dislike', views.dislike_link, name='dislike_post'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='meme_portal/password/password_reset_done.html'), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="meme_portal/password/password_reset_confirm.html"), name='password_reset_confirm'),
-    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='meme_portal/password/password_reset_complete.html'), name='password_reset_complete'),      
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='meme_portal/password/password_reset_complete.html'), name='password_reset_complete'),
 ]
+
+urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
