@@ -233,6 +233,16 @@ def show_post(request, forum_name_slug, post_name_slug):
     return render(request=request, template_name='meme_portal/post.html', context=context_dict)
 
 @login_required
+def delete_post(request, forum_name_slug, post_name_slug):
+    post = get_object_or_404(Post, slug=post_name_slug)
+    curr_user = get_object_or_404(UserProfile, user=request.user)
+
+    if post.author == curr_user:
+        post.delete()
+
+    return redirect(reverse('meme_portal:show_forum', kwargs={"forum_name_slug":forum_name_slug}))
+
+@login_required
 def like_link(request, forum_name_slug, post_name_slug):
     if request.method == 'GET':
         usr = request.user
