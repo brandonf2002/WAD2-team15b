@@ -1,7 +1,9 @@
-<style>
-  .profile_pic{
+.profile_pic {
     max-width: 200px;
     max-height: 200px;
     margin:0 auto;
     border-radius: 50%;
-  }
+}
+img {
+border-radius: 50%;
+}

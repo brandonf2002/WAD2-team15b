@@ -179,7 +179,6 @@ def user_account(request):
         if form.is_valid():
             form.save()
 
-
     return render(request, 'meme_portal/account.html', context=context_dict)
 
 def show_forum(request, forum_name_slug, sort_by="top_posts"):

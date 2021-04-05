@@ -5,25 +5,25 @@
 
 {% if user.is_authenticated %}
 	<br>
-	<div class="row">
-		<div class="container xxl">
-			<div class="col-md-6">
-				<div class="card">
+		<div class="container">
+			<div class="row">
+				<div class="col">
 					<h3 style="padding-left:20px;">Welcome Back {{ user.username }}!</h3>
-					<img class="profile-pic"  src="{{ user.userProfile.picture.url }}"/>
-					<p style="padding-left:20px;">Visits: {{ visits }}</p>
+					<img class="img-fluid"src="{{ user.userProfile.picture.url }}"/>
+					<br>
+					<br>
 				</div>
 			</div>
-			<div class="col-md-12">
+			 <div class="col">
+				 <div class="card">
 				<form method="POST" action="" enctype="multipart/form-data">
 					{% csrf_token %}
 					{{form.as_p}}
 					<input class="btn btn-secondary" type="submit" name="Update information">
 				</form>
 			</div>
+			</div>
 		</div>
-	</div>
-
 {% else %}
 	<a href="{% url 'meme_portal:login' %}">You are not Logged in</a><br />
 {% endif %}
