@@ -9,7 +9,6 @@ class UserProfile(models.Model):
 	user = models.OneToOneField(User, blank=True, on_delete=models.CASCADE, related_name='userProfile')
 	# The additional attributes we wish to include.
 	email = models.EmailField(blank=True)
-	website = models.URLField(blank=True)
 	picture = models.ImageField(default="profile1.png", upload_to='profile_images', blank=True)
 
 	def __str__(self):
@@ -34,7 +33,6 @@ class Post(models.Model):
     likes = models.ManyToManyField(UserProfile, related_name='likes', blank=True)
     dislikes = models.ManyToManyField(UserProfile, related_name='dislikes', blank=True)
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    #slug = models.SlugField(unique=True);
     slug = AutoSlugField(unique=True)
 
     def save(self, *args, **kwargs):

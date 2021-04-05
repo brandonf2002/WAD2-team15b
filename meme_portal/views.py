@@ -1,3 +1,4 @@
+import os
 from django.db.models.aggregates import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -19,6 +20,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.core.files.base import ContentFile
+from django.core.files.base import ContentFile
 
 def index(request):
     forums_with_posts = Forum.objects.filter(posts__isnull=False).distinct()
@@ -56,24 +59,6 @@ def get_server_side_cookie(request, cookie, default_val=None):
 		val = default_val
 	return val
 
-def visitor_cookie_handler(request):
-	# Get the number of visits to the site.
-	# We use the COOKIES.get() function to obtain the visits cookie.
-	# If the cookie exists, the value returned is casted to an integer.
-	# If the cookie doesn't exist, then the default value of 1 is used.
-	visits = int(request.COOKIES.get('visits', '1'))
-	last_visit_cookie = get_server_side_cookie(request, 'last_visit', str(datetime.now()))
-	last_visit_time = datetime.strptime(last_visit_cookie[:-7], '%Y-%m-%d %H:%M:%S')
-	# If it's been more than a day since the last visit...
-	if (datetime.now() - last_visit_time).days > 0:
-		visits = visits + 1
-		# Update the last visit cookie now that we have updated the count
-		request.session['last_visit'] = str(datetime.now())
-	else:
-		request.session['last_visit'] = last_visit_cookie
-
-	request.session['visits'] = visits
-
 def register(request):
     # A boolean value for telling the template
     # whether the registration was successful.
@@ -102,7 +87,6 @@ def register(request):
             # until we're ready to avoid integrity problems.
             profile = profile_form.save(commit=False)
             profile.user = user
-            print(request.FILES)
 
             # Now we save the UserProfile model instance.
             profile.save()
@@ -127,36 +111,35 @@ def register(request):
 
 def user_login(request):
 # If the request is a HTTP POST, try to pull out the relevant information.
-	if request.method == 'POST':
-		username = request.POST.get('username')
-		password = request.POST.get('password')
-		# Use Django's machinery to attempt to see if the username/password
-		# combination is valid - a User object is returned if it is.
-		user = authenticate(username=username, password=password)
-		if user:
-			# Is the account active? It could have been disabled.
-			if user.is_active:
-				login(request, user)
-				return redirect(reverse('meme_portal:index'))
-			else:
-				# An inactive account was used - no logging in!
-				return HttpResponse("Your Meme_portal account is disabled.")
-		else:
-			# Bad login details were provided. So we can't log the user in.
-			
-			messages.error(request,'username or password not correct')
-			return HttpResponseRedirect(reverse('meme_portal:login'))
-			# The request is not a HTTP POST, so display the login form.
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        # Use Django's machinery to attempt to see if the username/password
+        # combination is valid - a User object is returned if it is.
+        user = authenticate(username=username, password=password)
+        if user:
+            # Is the account active? It could have been disabled.
+            if user.is_active:
+                login(request, user)
+                return redirect(reverse('meme_portal:index'))
+            else:
+                # An inactive account was used - no logging in!
+                return HttpResponse("Your Meme_portal account is disabled.")
+        else:
+            # Bad login details were provided. So we can't log the user in.
+            
+            messages.error(request,'username or password not correct')
+            return HttpResponseRedirect(reverse('meme_portal:login'))
+            # The request is not a HTTP POST, so display the login form.
 
-		# This scenario would most likely be a HTTP GET.
-	else:
-		# No context variables to pass to the template system, hence the
-		# blank dictionary object...
-		return render(request, 'meme_portal/login.html')
+        # This scenario would most likely be a HTTP GET.
+    else:
+        # No context variables to pass to the template system, hence the
+        # blank dictionary object...
+        return render(request, 'meme_portal/login.html')
 
-@login_required(login_url='login')
+@login_required
 def user_account(request):
-    visitor_cookie_handler(request)
     userprofile=request.user.userProfile
     form=UserProfileForm(instance=userprofile)
     context_dict = {'form':form}
@@ -165,6 +148,12 @@ def user_account(request):
         form=UserProfileForm(request.POST, request.FILES, instance=userprofile)
         if form.is_valid():
             form.save()
+            if not userprofile.picture:
+                BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                with open(BASE_DIR + "/media/profile1.png", 'rb') as f:
+                    data = f.read()
+
+                userprofile.picture.save(f'{userprofile.user.username}_porfile_pic', ContentFile(data))
 
     return render(request, 'meme_portal/account.html', context=context_dict)
 
@@ -182,10 +171,6 @@ def my_posts(request, sort_by="newest_first"):
 
     return render(request, 'meme_portal/my_posts.html', context_dict)
 
-@login_required
-def my_comments(request):
-    pass
-
 def show_forum(request, forum_name_slug, sort_by="top_posts"):
     context_dict = {'sorting': sort_by}
 
@@ -195,15 +180,13 @@ def show_forum(request, forum_name_slug, sort_by="top_posts"):
         # This if statement sorts the posts by some amount depending on the value passed into this method
         if sort_by == "top_posts":
             posts = Post.objects.filter(forum=forum).annotate(
-                like_count=Count('likes'),
-                dislike_count=Count('dislikes')
-            ).order_by('-like_count', 'dislike_count')
+                like_count=(Count('likes') - Count('dislikes'))
+            ).order_by('-like_count')
 
         elif sort_by == "worst_posts":
             posts = Post.objects.filter(forum=forum).annotate(
-                like_count=Count('likes'),
-                dislike_count=Count('dislikes')
-            ).order_by('like_count', '-dislike_count')
+                like_count=(Count('likes') - Count('dislikes'))
+            ).order_by('like_count')
 
         elif sort_by == "oldest_first":
             posts = Post.objects.filter(forum=forum).order_by('time_posted')
@@ -221,15 +204,27 @@ def show_forum(request, forum_name_slug, sort_by="top_posts"):
     return render(request, 'meme_portal/forum.html', context=context_dict)
 
 def forum(request):
+    # This method will display a random forum to the user
+
     forum_slug = Forum.objects.order_by('?')[0].slug
     return show_forum(request, forum_slug)
 
 def show_post(request, forum_name_slug, post_name_slug):
+    # This methed will show the user the given post and all of the
+    # associated comments and their users
+    #
+    # It will also allow the user to create and submit comments of their own
     context_dict = {}
 
-    post = get_object_or_404(Post, slug=post_name_slug)
-    forum = get_object_or_404(Forum, slug=forum_name_slug)
-    comments = post.comments.all().order_by('-time_posted')
+    try: 
+        post = get_object_or_404(Post, slug=post_name_slug)
+        forum = get_object_or_404(Forum, slug=forum_name_slug)
+        comments = post.comments.all().order_by('-time_posted')
+    except:
+        post = None
+        forum = None
+        comments = None
+
     new_comment = None
 
     if request.method == 'POST' and request.user.is_authenticated:
@@ -252,6 +247,7 @@ def show_post(request, forum_name_slug, post_name_slug):
 
 @login_required
 def delete_post(request, forum_name_slug, post_name_slug):
+    # This method will allow users to delete posts from the database and the website
     post = get_object_or_404(Post, slug=post_name_slug)
     curr_user = get_object_or_404(UserProfile, user=request.user)
 
@@ -262,6 +258,10 @@ def delete_post(request, forum_name_slug, post_name_slug):
 
 @login_required
 def like_link(request, forum_name_slug, post_name_slug):
+    # this method allows a user to like a post
+    #
+    # if the user has already liked the post it will remove that like from the post
+    # if the user has disliked the post that dislike will be removed and a like will be added in its place
     if request.method == 'GET':
         usr = request.user
         post = get_object_or_404(Post, slug=post_name_slug)
@@ -278,6 +278,10 @@ def like_link(request, forum_name_slug, post_name_slug):
 
 @login_required
 def dislike_link(request, forum_name_slug, post_name_slug):
+    # this method allows a user to dislike a post
+    #
+    # if the user has already disliked the post it will remove that dislike from the post
+    # if the user has liked the post that like will be removed and a dislike will be added in its place
     if request.method == 'GET':
         usr = request.user
         post = get_object_or_404(Post, slug=post_name_slug)
@@ -301,6 +305,9 @@ def user_logout(request):
 
 @login_required
 def create_post(request,forum_name_slug):
+    # This method displays the create a new page forum to the website
+    # If the user submits the forum the new forum is added to the data base and the user
+    # is redirecited to this new forum
     forum = get_object_or_404(Forum, slug=forum_name_slug)
     context_dict = {}
 
@@ -322,6 +329,8 @@ def create_post(request,forum_name_slug):
 
 @login_required
 def create_page(request):
+    # This method displays the create a post forum to the website
+    # If the user submits the forum the new information is added to the database
     context_dict = {}
 
     if request.method=='POST' and request.user.is_authenticated:
@@ -339,29 +348,21 @@ def create_page(request):
     return render(request, "meme_portal/create_page.html", context=context_dict)
 
 def password_reset_request(request):
-	if request.method == "POST":
-		password_reset_form = PasswordResetForm(request.POST)
-		if password_reset_form.is_valid():
-			data = password_reset_form.cleaned_data['email']
-			associated_users = User.objects.filter(Q(email=data))
-			if associated_users.exists():
-				for user in associated_users:
-					subject = "Password Reset Requested"
-					email_template_name = "meme_portal/password/password_reset_email.txt"
-					c = {
-					"email":user.email,
-					'domain':'127.0.0.1:8000',
-					'site_name': 'Website',
-					"uid": urlsafe_base64_encode(force_bytes(user.pk)),
-					"user": user,
-					'token': default_token_generator.make_token(user),
-					'protocol': 'http',
-					}
-					email = render_to_string(email_template_name, c)
-					try:
-						send_mail(subject, email, 'admin@example.com' , [user.email], fail_silently=False)
-					except BadHeaderError:
-						return HttpResponse('Invalid header found.')
-					return redirect ("/password_reset/done/")
-	password_reset_form = PasswordResetForm()
-	return render(request=request, template_name="meme_portal/password/password_reset.html", context={"password_reset_form":password_reset_form})
+    if request.method == "POST":
+        password_reset_form = PasswordResetForm(request.POST)
+        if password_reset_form.is_valid():
+            data = password_reset_form.cleaned_data['email']
+            associated_users = User.objects.filter(Q(email=data))
+            if associated_users.exists():
+                for user in associated_users:
+                    subject = "Password Reset Requested"
+                    email_template_name = "meme_portal/password/password_reset_email.txt"
+                    c = { "email":user.email, 'domain':'127.0.0.1:8000', 'site_name': 'Website', "uid": urlsafe_base64_encode(force_bytes(user.pk)), "user": user, 'token': default_token_generator.make_token(user), 'protocol': 'http', }
+                    email = render_to_string(email_template_name, c)
+                    try:
+                        send_mail(subject, email, 'admin@example.com' , [user.email], fail_silently=False)
+                    except BadHeaderError:
+                        return HttpResponse('Invalid header found.')
+                    return redirect ("/password_reset/done/")
+    password_reset_form = PasswordResetForm()
+    return render(request=request, template_name="meme_portal/password/password_reset.html", context={"password_reset_form":password_reset_form})

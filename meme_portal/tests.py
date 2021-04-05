@@ -10,7 +10,7 @@ from meme_portal.models import Post, Forum, Comment, UserProfile
 from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
 
-from .views import like_link, dislike_link
+from .views import like_link, dislike_link, user_account, my_posts
 
 def add_forum(name):
     forum = Forum.objects.get_or_create(name=name)[0]
@@ -243,7 +243,7 @@ class ForumViewTests(TestCase):
         add_like(post_2, usr2)
         add_like(post_1, usr2)
 
-        response = self.client.get(reverse('meme_portal:show_forum', kwargs={'forum_name_slug':'meme_forum', 'sort_by':'top_posts'}))
+        response = self.client.get(reverse('meme_portal:show_forum_sort', kwargs={'forum_name_slug':'meme_forum', 'sort_by':'top_posts'}))
 
         self.assertEqual(response.status_code, 200)
         self.assertEquals(response.context['posts'][0], post_2)
@@ -267,7 +267,7 @@ class ForumViewTests(TestCase):
         add_like(post_2, usr2)
         add_like(post_1, usr2)
 
-        response = self.client.get(reverse('meme_portal:show_forum', kwargs={'forum_name_slug':'meme_forum', 'sort_by':'worst_posts'}))
+        response = self.client.get(reverse('meme_portal:show_forum_sort', kwargs={'forum_name_slug':'meme_forum', 'sort_by':'worst_posts'}))
 
         self.assertEqual(response.status_code, 200)
         self.assertEquals(response.context['posts'][0], post_3)
@@ -291,7 +291,7 @@ class ForumViewTests(TestCase):
         add_like(post_2, usr2)
         add_like(post_1, usr2)
 
-        response = self.client.get(reverse('meme_portal:show_forum', kwargs={'forum_name_slug':'meme_forum', 'sort_by':'newest_first'}))
+        response = self.client.get(reverse('meme_portal:show_forum_sort', kwargs={'forum_name_slug':'meme_forum', 'sort_by':'newest_first'}))
 
         self.assertEqual(response.status_code, 200)
         self.assertEquals(response.context['posts'][0], post_3)
@@ -315,7 +315,7 @@ class ForumViewTests(TestCase):
         add_like(post_2, usr2)
         add_like(post_1, usr2)
 
-        response = self.client.get(reverse('meme_portal:show_forum', kwargs={'forum_name_slug':'meme_forum', 'sort_by':'oldest_first'}))
+        response = self.client.get(reverse('meme_portal:show_forum_sort', kwargs={'forum_name_slug':'meme_forum', 'sort_by':'oldest_first'}))
 
         self.assertEqual(response.status_code, 200)
         self.assertEquals(response.context['posts'][0], post_1)
@@ -412,3 +412,65 @@ class LoginTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context['user'].is_active)
 
+class ShowPostTests(TestCase):
+    def setUp(self):
+        self.request_factory = RequestFactory()
+
+    def test_show_posts_page_dosent_exist(self):
+        """
+        This method will test the output of the show post page when the the post does not exist
+        """
+        mf = add_forum('meme_forum')
+        response = self.client.get(reverse('meme_portal:show_post', kwargs={'forum_name_slug':'meme_forum', 'post_name_slug':'nothign'}))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'This post does not exist.')
+
+class AccountPageTests(TestCase):
+    def setUp(self):
+        self.request_factory = RequestFactory()
+        self.user = add_userProfile()
+
+    def test_account_page_not_logged_in(self):
+        """
+        This method will test the output of the accounts page when you are not logged in
+        """
+        response = self.client.get(reverse('meme_portal:account'))
+
+        # 302 due to the redirection to the login page
+        self.assertEqual(response.status_code, 302)
+
+    def test_account_page_logged_in(self):
+        """
+        This method will test the output of the accounts page when you are not logged in
+        """
+        request = self.request_factory.get(reverse('meme_portal:account'))
+        request.user = self.user.user
+
+        response = user_account(request)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Welcome Back bob02!')
+
+class MyPostsTest(TestCase):
+    def setUp(self):
+        self.request_factory = RequestFactory()
+        self.user = add_userProfile()
+
+    def test_my_posts_page_logged_in(self):
+        """
+        This method will test the output of the my posts page when the user is logged in 
+        """
+        mf = add_forum('meme_forum')
+
+        post_1 = add_post(mf, "post1", "https://static.djangoproject.com/img/fundraising-heart.cd6bb84ffd33.svg", self.user)
+        post_2 = add_post(mf, "post2", "http://thewowstyle.com/wp-content/uploads/2015/01/nature-images.jpg", self.user)
+        post_3 = add_post(mf, "post3", "https://eskipaper.com/images/images-2.jpg", self.user)
+
+        request = self.request_factory.get(reverse('meme_portal:my_posts'))
+        request.user = self.user.user
+
+        response = my_posts(request)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Your Posts:')

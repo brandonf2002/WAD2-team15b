@@ -27,7 +27,6 @@
 {% endblock %}
 
 {% block body_block %}
-
 	<div class="container">
 		{% if post %}
 			<div class="row justify-content-center">
@@ -96,7 +95,10 @@
 				</div>
 			</div>
 		{% else %}
-			<strong>This post does not exist.</strong>
+			<div class="text-center justify-content-center align-items-center">
+				<br/>
+				<strong>This post does not exist.</strong>
+			</div>
 		{% endif %}
 	</div>
 
