@@ -36,7 +36,10 @@ def index(request):
         forum_data.append(
             {
                 'forum': i,
-                'posts': Post.objects.filter(forum=i).annotate(like_count=Count('likes')-Count('dislikes')).order_by('-like_count')[:3]
+                'posts': Post.objects.filter(forum=i).annotate(
+                    like_count=Count('likes'),
+                    dislike_count=Count('dislikes')
+                ).order_by('-like_count', 'dislike_count')[:3],
             }
         )
 

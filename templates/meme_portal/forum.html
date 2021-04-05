@@ -75,9 +75,19 @@
 						</div>
 					{% endfor %}
 				</div>
+			{% else %}
+				<div class="text-center justify-content-center align-items-center">
+					<strong>This Forum contains no posts.</strong>
+					<br/>
+					<strong>Please help by creating some!</strong>
+				</div>
 			{% endif %}
 		{% else %}
-			<strong>This Forum does not exist, please create it.</strong>
+			<div class="text-center justify-content-center align-items-center">
+				<strong>This Forum does not exist yet.</strong>
+				<br/>
+				<strong>Please help by creating it!</strong>
+			</div>
 		{% endif %}
 	</div>
 
