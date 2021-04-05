@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card">
-		    <form class="box" method="post" action="{% url 'meme_portal:register' %}">
+		    <form class="box" method="post" enctype="multipart/form-data" action="{% url 'meme_portal:register' %}">
                     <h1>Register</h1>
                     <p class="text-muted"> Please enter your details!</p> 
 				{% csrf_token %}
