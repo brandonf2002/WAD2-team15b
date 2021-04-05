@@ -168,6 +168,24 @@ def user_account(request):
 
     return render(request, 'meme_portal/account.html', context=context_dict)
 
+@login_required
+def my_posts(request, sort_by="newest_first"):
+    context_dict = {}
+    curr_user = get_object_or_404(UserProfile, user=request.user)
+
+    if sort_by == "oldest_first":
+        posts = Post.objects.filter(author=curr_user).order_by('time_posted')
+    else:
+        posts = Post.objects.filter(author=curr_user).order_by('-time_posted')
+
+    context_dict['posts'] = posts
+
+    return render(request, 'meme_portal/my_posts.html', context_dict)
+
+@login_required
+def my_comments(request):
+    pass
+
 def show_forum(request, forum_name_slug, sort_by="top_posts"):
     context_dict = {'sorting': sort_by}
 
@@ -255,6 +273,7 @@ def like_link(request, forum_name_slug, post_name_slug):
                 if usrProf in post.dislikes.all():
                     post.dislikes.remove(usrProf)
                 post.likes.add(usrProf)
+                
     return show_forum(request, forum_name_slug)
 
 @login_required
@@ -270,6 +289,7 @@ def dislike_link(request, forum_name_slug, post_name_slug):
                 if usrProf in post.likes.all():
                     post.likes.remove(usrProf)
                 post.dislikes.add(usrProf)
+
     return show_forum(request, forum_name_slug)
 
 @login_required

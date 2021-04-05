@@ -72,7 +72,9 @@
 									My Account
 								</a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-									<a class="dropdown-item" href="{% url 'meme_portal:account' %}">My Profile</a>
+									<a class="dropdown-item" href="{% url 'meme_portal:account' %}">Change My Info</a>
+									<a class="dropdown-item" href="{% url 'meme_portal:my_posts' %}">My Posts</a>
+									<a class="dropdown-item" href="{% url 'meme_portal:my_comments' %}">My Comments</a>
 									<a class="dropdown-item" href="{% url 'meme_portal:logout' %}">Logout</a>
 								</div>
 							</li>
