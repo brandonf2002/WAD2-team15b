@@ -206,6 +206,7 @@ def show_forum(request, forum_name_slug, sort_by="top_posts"):
         elif sort_by == "newest_first":
             posts = Post.objects.filter(forum=forum).order_by('-time_posted')
 
+
         context_dict['posts'] = posts
         context_dict['forum'] = forum
     except Forum.DoesNotExist:
