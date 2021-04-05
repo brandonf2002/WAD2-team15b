@@ -20,6 +20,7 @@
 
 {% block add_js %}
 	<script src="{% static 'js/like_button.js' %}"></script>
+	<script src="{% static 'js/delete_button.js' %}"></script>
 {% endblock %}
 
 {% block body_block %}
@@ -52,7 +53,7 @@
 									<h4 class="mb-3">{{ post.name }}</h4>
 									<p class="mb-3">By - {{ post.author }}
 										{% ifequal user.username post.author.user.username %}
-										<button class="button_like" onclick="window.location.href='{% url 'meme_portal:delete_post' forum.slug post.slug %}';">
+										<button class="button_delete" type="subit" post_url="{% url 'meme_portal:delete_post' forum.slug post.slug %}">
 												<img src="{% static 'images/forum/remove.jpg' %}" post="{{ post.slug }}"/>
 											</button>
 										{% endifequal %}
